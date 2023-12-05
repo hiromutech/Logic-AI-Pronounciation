@@ -1,0 +1,132 @@
+body{
+    background-image: url(gamebg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.logow{
+    width: 10%;
+    height: 10%;
+    align-items: center;
+    position: relative;
+    top: -530px;
+    left: 850px;
+}
+.wiz{
+    width: 500px;
+    position: relative;
+    left: 490px;
+    top: -10px;
+}
+.h1{
+    font-family: sans-serif;
+    font-size: 50px;
+    text-align: center;
+    position: relative;
+    top: -200px;
+}
+.h2{
+    font-family: sans-serif;
+    color: rgb(231, 163, 163);
+    font-size: 30px;
+    text-align: center;
+    position: relative;
+    top: -230px;
+}
+.p1{
+    font-family: sans-serif;
+    font-size: 50px;
+    color: rgb(235, 153, 153);
+    background-color: brown;
+    width: 400px;
+    height: 200px;
+    text-align: center;
+    position: relative;
+    top: -270px; 
+    left: 500px;
+}
+.p3{
+    font-family: sans-serif;
+    font-size: 50px;
+    color: rgb(235, 153, 153);
+    background-color: brown;
+    width: 400px;
+    height: 200px;
+    text-align: center;
+    position: relative;
+    top: -630px; 
+    left: 1000px;
+}
+.p2{
+    font-family: sans-serif;
+    font-size: 50px;
+    color: white;
+    text-align: center;
+    position: relative;
+    top: -430px; 
+    left: -240px;
+}
+.p4{
+    font-family: sans-serif;
+    font-size: 40px;
+    color: white;
+    text-align: center;
+    position: relative;
+    top: -780px;
+    left: 260px; 
+}
+.nex{
+    border-radius: 30px;
+    background-color: rgb(236, 152, 225);
+    color: rgb(0, 0, 0);   
+    position: relative;
+    top: -770px;
+    left: 650px;
+    text-align: center;
+    font-family: Impact;
+    text-decoration: none;
+    width: 30%;
+    font-size: 50px;
+    display: inline-block;
+}
+.hp{
+    border-radius: 30px;
+    background-color: rgb(236, 152, 225);
+    color: rgb(0, 0, 0);   
+    font-family: Impact;
+    position: relative;
+    top: -680px;
+    left: 80px;
+    text-align: center;
+    text-decoration: none;
+    width: 30%;
+    font-size: 50px;
+    display: inline-block;
+}
+.kidd{
+    width: 10%;
+    height: 5%;
+    position: relative;
+    top: -850px;
+    left: 1500px;
+}
+.fier{
+    width: 10%;
+    height: 10%;
+    position: relative;
+    top: -500px;
+    left: -1100px;
+}
+.zero{
+    font-family: 'Arial Narrow';
+    font-size: 60px;
+    position: relative;
+    top: -640px;
+    left: 190px;
+}
+.four{
+    font-family: 'Arial Narrow';
+    font-size: 60px;
+    position: relative;
+    top: -1030px;
+    left: 1650px;
+}

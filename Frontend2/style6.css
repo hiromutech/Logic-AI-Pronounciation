@@ -1,0 +1,57 @@
+body{
+    background-color: rgb(207, 110, 207);
+}
+.mistakes{
+    font-size: 50px;
+    text-decoration: none;
+    background-color: rgb(243, 159, 173);
+    color: white;
+    position: relative;
+    top: -500px;
+    left: 610px;
+}
+.home{
+    font-size: 50px;
+    text-decoration: none;
+    background-color: rgb(243, 159, 173);
+    color: white;
+    position: relative;
+    top: -500px;
+    left: 630px;
+}
+.profile{
+    font-size: 50px;
+    text-decoration: none;
+    background-color: rgb(243, 159, 173);
+    color: white;
+    position: relative;
+    top: -500px;
+    left: 650px;
+}
+.avat{
+    font-size: 100px;
+    position: relative;
+    top: -400px;
+    left: 370px;
+}
+.set{
+    position: relative;
+    left: 1700px;
+}
+.deet{
+    background-color: rgb(167, 163, 163);
+    block-size: 300px;
+    font-size: 100px;
+    text-align: justify;
+    position: relative;
+    top: 100px;
+    left: -10px;
+}
+.deets{
+    font-size: 30px;
+    text-align: justify;
+    position: relative;
+    top: -120px;
+    left: -5px;
+}
+
