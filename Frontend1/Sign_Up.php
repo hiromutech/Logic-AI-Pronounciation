@@ -195,7 +195,6 @@
                 align-items: center;
                 column-gap: 3rem;
                 margin: 1% 25%;
-                
             }
 
             .Noaccount::before, .Noaccount::after{
@@ -229,6 +228,7 @@
     <img  src="Logo1.png" alt="SpeakWiz Logo" style="height:100px"; width:100px; class="LOGO">
     <h1>SIGN-UP</h1>
 
+    <form action = "connect.php" method="POST">
     <div class="name">
         <input type="text" name="name" placeholder=" Full Name (FN, MI, LN)" style="width: 300px; height: 25px;">
     </div>
@@ -264,6 +264,7 @@
         <input type="password" name="password1" placeholder=" Re-type Password" style="width: 300px; height: 25px;" id="password1">
         <img src="eyeclose" id="eyeicon1">
     </div>
+        </form>
 
     <script>
         let eyeicon = document.getElementById("eyeicon");
@@ -299,10 +300,10 @@
 
     <input type="checkbox" name="confirmation" id="confirmation"> 
     <label for="checkbox">By clicking on Sign Up, you agree to our</label><br>
-    <a href="Terms.html" style="color: palevioletred;"><u>Terms, Policies, & Conditions</u></a>
+    <a href="Terms.php" style="color: palevioletred;"><u>Terms, Policies, & Conditions</u></a>
     <p></p>
 
-    <a href="Successfully.html" background-color:pink; class="btn_log">SIGN UP</a>
+    <a href="Successfully.php" background-color:pink; class="btn_log">SIGN UP</a>
     <p style="color: white;font-size: 12px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">OR</p>
 
     <script src="https://accounts.google.com/gsi/client" async></script>
@@ -327,9 +328,9 @@
     </div>
     
     &nbsp;
-    <a href="Log_In.html" class="btn_sign">LOG IN</a>
+    <a href="Log_In.php" class="btn_sign">LOG IN</a>
     &nbsp;
-    <a href="Title_Page.html" class="btn_back">BACK</a>
+    <a href="Title_Page.php" class="btn_back">BACK</a>
 
     <p>&nbsp;</p>
 	

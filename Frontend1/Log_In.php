@@ -174,9 +174,9 @@
     </div>
     
     &nbsp;
-    <a href="Sign_Up.html" class="btn_sign">SIGN UP</a>
+    <a href="Sign_Up.php" class="btn_sign">SIGN UP</a>
     &nbsp;
-    <a href="Title_Page.html" class="btn_back">BACK</a>
+    <a href="Title_Page.php" class="btn_back">BACK</a>
 	
 </center>
 

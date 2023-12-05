@@ -59,9 +59,9 @@
 <center>
     <img  src="Logo1.png" alt="SpeakWiz Logo" style="height:500px"; width:500px; class="LOGO">
 	
-    <a href="Log_In.html" background-color:pink; class="btn_log">LOG IN</a>
+    <a href="Log_In.php" background-color:pink; class="btn_log">LOG IN</a>
     &nbsp;
-    <a href="Sign_Up.html" class="btn_sign">SIGN UP</a>
+    <a href="Sign_Up.php" class="btn_sign">SIGN UP</a>
 </center>
 </body>
 </html>
