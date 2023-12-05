@@ -1,3 +1,20 @@
+<?php
+require 'connect.php';
+
+if(isset($_POST["submit"])){
+  $name = $_POST["name"];
+  $username = $_POST["username"];
+  $email = $_POST["email"];
+  $contact = $_POST["contact"];
+  $password = $_POST["password"];
+
+  $query = "INSERT INTO users VALUES('', '$name', '$username', '$email', '$contact', '$password')";
+  mysqli_query($conn,$query);
+  echo "<script> alert('Data Inserted Successfully'); </script>";
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -228,7 +245,7 @@
     <img  src="Logo1.png" alt="SpeakWiz Logo" style="height:100px"; width:100px; class="LOGO">
     <h1>SIGN-UP</h1>
 
-    <form action = "connect.php" method="POST">
+    <form action = "" method="POST">
     <div class="name">
         <input type="text" name="name" placeholder=" Full Name (FN, MI, LN)" style="width: 300px; height: 25px;">
     </div>
@@ -236,7 +253,7 @@
     <p></p>
 
     <div class="username">
-        <input type="text" name="name" placeholder=" Username" style="width: 300px; height: 25px;">
+        <input type="text" name="username" placeholder=" Username" style="width: 300px; height: 25px;">
     </div>
 
     <p></p>
@@ -264,7 +281,7 @@
         <input type="password" name="password1" placeholder=" Re-type Password" style="width: 300px; height: 25px;" id="password1">
         <img src="eyeclose" id="eyeicon1">
     </div>
-        </form>
+
 
     <script>
         let eyeicon = document.getElementById("eyeicon");
@@ -303,7 +320,7 @@
     <a href="Terms.php" style="color: palevioletred;"><u>Terms, Policies, & Conditions</u></a>
     <p></p>
 
-    <a href="Successfully.php" background-color:pink; class="btn_log">SIGN UP</a>
+    <input type="submit" name = "submit" style="background-color:pink;" class="btn_log">
     <p style="color: white;font-size: 12px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">OR</p>
 
     <script src="https://accounts.google.com/gsi/client" async></script>
@@ -320,6 +337,8 @@
         data-shape="rectangular"
         data-logo_alignment="left">
     </div>
+
+    </form>
 
     <p>&nbsp;</p>    
 
