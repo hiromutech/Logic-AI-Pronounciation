@@ -1,17 +1,78 @@
 <?php
-require 'connect.php';
+    require 'connect.php';
 
-if(isset($_POST["submit"])){
-  $name = $_POST["name"];
-  $username = $_POST["username"];
-  $email = $_POST["email"];
-  $contact = $_POST["contact"];
-  $password = $_POST["password"];
+    if(!$conn){
+        echo 'Connection error: ' . mysqli_connect_error();
+    }
 
-  $query = "INSERT INTO users VALUES('', '$name', '$username', '$email', '$contact', '$password')";
-  mysqli_query($conn,$query);
-  echo "<script> alert('Data Inserted Successfully'); </script>";
-}
+    // define variables and set to empty values
+    $fullNameErr = $userNameErr = $emailErr = $contactNumErr = $passwordErr = "";
+    $fullName = $userName = $email = $contactNum = $password = "";
+    
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        if (empty($_POST["fullName"]))
+        {
+            $fullNameErr = "Full Name is Required";
+        }
+        else
+        {
+            $fullName = clean_input($_POST["fullName"]);  
+        }
+
+        if (empty($_POST["userName"]))
+        {
+            $userNameErr = "Username is Required";
+        }
+        else
+        {
+            $userName = clean_input($_POST["userName"]);
+        }
+
+        if (empty($_POST["email"]))
+        {
+            $emailErr = "Email is Required";
+        }
+
+        $email = clean_input($_POST["email"]);
+        
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        {
+            $emailErr = "Invalid Email Format";
+            $email = "";
+        }
+
+        if (empty($_POST["contactNum"]))
+        {
+            $contactNumErr = "Contact Number is Required";
+        }
+        else
+        {
+            $contactNum = clean_input($_POST["contactNum"]);
+        }
+
+        if (empty($_POST["password"]))
+        {
+            $passwordErr = "Password is Required";
+        }
+        else
+        {
+   
+            $password = clean_input($_POST["password"]);
+        }
+
+
+
+
+    }
+
+    function clean_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
 ?>
 
@@ -21,222 +82,11 @@ if(isset($_POST["submit"])){
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title> SpeakWiz</title>
         <link rel="icon" type="image/png" href="Logo1.png">
-        <style>
-            body {background-image:url(https://e0.pxfuel.com/wallpapers/378/851/desktop-wallpaper-stars-purple-cosmos-space-cosmos-universe.jpg);
-			background-repeat: no-repeat;
-			background-attachment: fixed;
-			background-size: 100% 100%;}
-            a {color: white; text-decoration: none;}
+        <link rel="stylesheet" type="text/css" href="Sign_Up.css">
 
-            a:hover {color: palevioletred; background-color: pink;}
-
-            .LOGO {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .btn_log {
-                display: block;
-                margin-left: auto ;
-                margin-right: auto;
-                width: 15%;
-                text-align: center;
-                padding : 8px 20px;
-                border-radius: 25px;
-                margin: 0 10px
-                
-            }
-
-            .btn_sign {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                width: 15%;
-                text-align: center;
-                padding : 8px 20px;
-                border-radius: 25px;
-                margin: 0 10px
-            }
-
-            .btn_back {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                width: 15%;
-                text-align: center;
-                padding : 8px 20px;
-                border-radius: 25px;
-                margin: 0 10px
-            }
-
-            .btn_log {
-                background-color: violet;
-            }
-
-            .btn_sign {
-                background-color: indigo;
-            }
-
-            .btn_back {
-                background-color: purple;
-            }
-
-            .name {
-                background: white;
-                width: 90%;
-                max-width: 265px;
-                border-radius: 5px;
-                padding: 10px 20px;
-                margin: auto;
-                display: flex;
-            }
-
-            .name input {
-                width: 100%
-                padding: 10px 0;
-                border: 0;
-                outline: 0;
-                color: #555
-            }
-
-            .username {
-                background: white;
-                width: 90%;
-                max-width: 265px;
-                border-radius: 5px;
-                padding: 10px 20px;
-                margin: auto;
-                display: flex;
-            }
-
-            .username input {
-                width: 100%
-                padding: 10px 0;
-                border: 0;
-                outline: 0;
-                color: #555
-            }
-
-            .email {
-                background: white;
-                width: 90%;
-                max-width: 265px;
-                border-radius: 5px;
-                padding: 10px 20px;
-                margin: auto;
-                display: flex;
-            }
-
-            .email input {
-                width: 100%
-                padding: 10px 0;
-                border: 0;
-                outline: 0;
-                color: #555
-            }
-
-            .contact {
-                background: white;
-                width: 90%;
-                max-width: 265px;
-                border-radius: 5px;
-                padding: 10px 20px;
-                margin: auto;
-                display: flex;
-            }
-
-            .contact input {
-                width: 100%
-                padding: 10px 0;
-                border: 0;
-                outline: 0;
-                color: #555
-            }
-
-            .pass{
-                background: white;
-                width: 90%;
-                max-width: 265px;
-                border-radius: 5px;
-                padding: 10px 20px;
-                margin: auto;
-                display: flex;
-                align-items: center;
-            }
-
-            .pass input {
-                width: 100%
-                padding: 10px 0;
-                border: 0;
-                outline: 0;
-                color: #555
-            }
-
-            .pass img {
-                cursor: pointer;
-                width: 25px; 
-                height: 25px;
-            }
 
             
-            .pass1{
-                background: white;
-                width: 90%;
-                max-width: 265px;
-                border-radius: 5px;
-                padding: 10px 20px;
-                margin: auto;
-                display: flex;
-                align-items: center;
-            }
 
-            .pass1 input {
-                width: 100%
-                padding: 10px 0;
-                border: 0;
-                outline: 0;
-                color: #555
-            }
-
-            .pass1 img {
-                cursor: pointer;
-                width: 25px; 
-                height: 25px;
-            }
-            
-
-            .Noaccount{
-                display: grid;
-                grid-template-columns: repeat(3,1fr);
-                align-items: center;
-                column-gap: 3rem;
-                margin: 1% 25%;
-            }
-
-            .Noaccount::before, .Noaccount::after{
-                content: "";
-                height: 2px;
-                background-color: white;
-                display: flex;
-            }
-
-            .g_id_signin {
-                width: 300px;
-            }
-
-            h1{color: white; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
-            h5{color: white; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
-
-            #confirmation {
-            accent-color: #9b59b6;
-            }
-
-            label {
-            color:palevioletred;
-            }
-
-		</style>
 	</head>
 
 <body>
@@ -245,31 +95,36 @@ if(isset($_POST["submit"])){
     <img  src="Logo1.png" alt="SpeakWiz Logo" style="height:100px"; width:100px; class="LOGO">
     <h1>SIGN-UP</h1>
 
-    <form action = "" method="POST">
+    <form action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+    <span class="error"> <?php echo $fullNameErr; ?></span>
     <div class="name">
-        <input type="text" name="name" placeholder=" Full Name (FN, MI, LN)" style="width: 300px; height: 25px;">
+        <input type="text" name="fullName" placeholder=" Full Name (FN, MI, LN)" style="width: 300px; height: 25px;">
     </div>
 
     <p></p>
-
+    
+    <span class="error"> <?php echo $userNameErr; ?></span>
     <div class="username">
-        <input type="text" name="username" placeholder=" Username" style="width: 300px; height: 25px;">
+        <input type="text" name="userName" placeholder=" Username" style="width: 300px; height: 25px;">
     </div>
 
     <p></p>
 
+    <span class="error"> <?php echo $emailErr; ?></span>
     <div class="email">
         <input type="text" name="email" placeholder=" Email" style="width: 300px; height: 25px;">
     </div>
 
     <p></p>
 
+    <span class="error"> <?php echo $contactNumErr; ?></span>
     <div class="contact">
-        <input type="number" maxlength="11" name="contact" placeholder=" Contact No." style="width: 300px; height: 25px;">
+        <input type="text" maxlength="11" name="contactNum" placeholder=" Contact No." style="width: 300px; height: 25px;">
     </div>
 
     <p></p>
 
+    <span class="error"> <?php echo $passwordErr; ?></span>
     <div class="pass">
         <input type="password" name="password" placeholder=" Password" style="width: 300px; height: 25px;" id="password">
         <img src="eyeclose" id="eyeicon">

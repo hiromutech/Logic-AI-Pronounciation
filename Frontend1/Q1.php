@@ -121,9 +121,9 @@
     <p></p>
 
     &nbsp;
-    <a href="Q2.html" class="btn_next">NEXT</a>
+    <a href="Q2.php" class="btn_next">NEXT</a>
     &nbsp;
-    <a href="Survey.html" class="btn_back">BACK</a>
+    <a href="Survey.php" class="btn_back">BACK</a>
 	
 </center>
 

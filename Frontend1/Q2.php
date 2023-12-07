@@ -140,9 +140,9 @@
     <p></p>
 
     &nbsp;
-    <a href="Q3.html" class="btn_sign">NEXT</a>
+    <a href="Q3.php" class="btn_sign">NEXT</a>
     &nbsp;
-    <a href="Q1.html" class="btn_back">BACK</a>
+    <a href="Q1.php" class="btn_back">BACK</a>
 	
 </center>
 

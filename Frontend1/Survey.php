@@ -48,7 +48,7 @@
     <img  src="Logo1.png" alt="SpeakWiz Logo" style="height:500px"; width:500px; class="LOGO">
 	<h1>Time For a Survey!</h1>
     <h3>CLICK 'OK' TO CONTINUE</h3>
-    <a href="Q1.html" class="btn_ok">OK</a>
+    <a href="Q1.php" class="btn_ok">OK</a>
 </center>
 </body>
 </html>

@@ -107,9 +107,9 @@
     <p></p>
 
     &nbsp;
-    <a href="Submit.html" class="btn_sign">NEXT</a>
+    <a href="Submit.php" class="btn_sign">NEXT</a>
     &nbsp;
-    <a href="Q4.html" class="btn_back">BACK</a>
+    <a href="Q4.php" class="btn_back">BACK</a>
 	
 </center>
 
