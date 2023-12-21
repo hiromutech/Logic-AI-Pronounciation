@@ -4,7 +4,7 @@
 
     <meta charset="UTF-8">
     <title>Document</title>
-    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="speech.css">
 
 </head>
 
@@ -19,7 +19,7 @@
         </div>
     </section>
 
-    <script src="./main.js"></script>
+    <script src="./speech.js"></script>
 
 </body>
 
