@@ -9,6 +9,7 @@
 			background-repeat: no-repeat;
 			background-attachment: fixed;
 			background-size: 100%}
+
             a {color: white; text-decoration: none;}
 
             a:hover {background-color: rgb(212, 95, 27);}
@@ -16,59 +17,44 @@
             .LOGO {
                 max-width: 100%;
                 max-height: 100%;
-                width: 200px;
-                height: 200px;
+                width: 20%;
+                height: 20%;
                 display: block;
                 margin-left: auto;
                 margin-right: auto;
-                margin-top: -480px;
             }
 
             .tmer{
-                max-width: 100%;
-                max-height: 100%;
-                width: 1200px;
-                height: 1000px;
+                width: 50%;
+                height: 50%;
                 display: block;
                 margin-left: auto;
                 margin-right: auto;
-                margin-top: -450px;
             }
 
             .gamep {
-                max-width: 100%;
-                max-height: 100%;
-                width: 1000px;
-                height: 1000px;
-                padding: 100px;
+                width: 60%;
+                height: 60%;
+
                 display: block;
                 margin-left: auto;
                 margin-right: auto;
-                margin-top: -450px;
     
             }
 
             .f {
-                max-width: 100%;
-                max-height: 100%;
-                width: 150px;
-                height: 80px;
+                width: 10%;
+                height: 10%;
                 display: block;
                 position: absolute;
-                margin-left: -120px;
                 margin-right: auto;
-                margin-top: -410px;
             }
 
             .t {
-                max-width: 100%;
-                max-height: 100%;
                 width: 120px;
                 height: 120px;
                 display: block;
                 position: absolute;
-                margin-top: -430px;
-                margin-left: -130px;
                 justify-content: center;
             }
 
@@ -148,6 +134,8 @@
             }
 
 
+
+
             h1{
                 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
                 font-size: 60px;
@@ -156,16 +144,28 @@
             h3{font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
             h5{color: white; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
 
+            /* Speech audio */
+            .audioBtn
+            {
+
+            }
+
+            .speaker
+            {
+                width: 5%;
+                height: 5%;
+            }
 		</style>
 	</head>
 
 <body>
-<center>
     <img  src="timer.png" alt="Timer" class="tmer">
     <img  src="Logo.png" alt="SpeakWiz Logo" class="LOGO">
     <img  src="gamepic.png" alt="Game Picture" class="gamep">
- 
-    <h1>RESERVOIR</h1>
+
+    <div>
+    <h1 id="word">RESERVOIR</h1>
+    </div>
     
     <div class="btns">
     <a href="a" class="btn_1">Re-Serv-Wire</a>
@@ -184,6 +184,24 @@
     <h1>4/5</h1>
     </div>
     
-</center>
 </body>
+
+<script>
+
+document.getElementById("audioBtn")
+.addEventListener("click", () => {
+
+  var msg = document.getElementById("word").innerHTML;
+  const utterance = new SpeechSynthesisUtterance(msg);
+
+  utterance.pitch = 1;
+  utterance.rate = 0.5;
+  utterance.volume = 1;
+  speechSynthesis.speak(utterance)
+
+})
+
+</script>
+
+
 </html>
