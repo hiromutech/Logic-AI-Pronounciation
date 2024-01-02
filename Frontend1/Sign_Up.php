@@ -70,8 +70,6 @@
             }
         }
 
-        
-
         $complete = 0;
 
         // FULL NAME
