@@ -40,7 +40,7 @@
                         <h3 class="text-center">Forgot Password</h3>
                     </div>
                     <div class="card-body">
-                        <form action="forgot-password.php" method="POST" autocomplete="off">
+                        <form action="forgot_password.php" method="POST" autocomplete="off">
 
                         
                         

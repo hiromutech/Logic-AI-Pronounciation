@@ -1,7 +1,7 @@
 <?php require_once "edit.php"; ?>
 <?php 
-$email = $_SESSION['email'];
-$password = $_SESSION['password'];
+$email = $_POST['email'];
+$password = $_POST['password'];
 if($email != false && $password != false){
     $sql = "SELECT * FROM usertable WHERE email = '$email'";
     $run_Sql = mysqli_query($con, $sql);

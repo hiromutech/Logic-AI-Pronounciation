@@ -34,8 +34,8 @@ background-size: 100% 100%;}
     <label class="btn btn-primary" for="option2">Checked</label>
     <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off">
     <label class="btn btn-primary" for="option3">Checked</label>
-    <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off">
-    <label class="btn btn-primary" for="option3">Checked</label>
+    <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off">
+    <label class="btn btn-primary" for="option4">Checked</label>
   </div>
   <div class="text-center mt-3 mb-3">
     <button type="button" class="btn btn-outline-primary btn-lg">Full-Width Button</button>
