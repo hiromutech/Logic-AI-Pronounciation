@@ -28,10 +28,6 @@
             $idx++;
         }
     } 
-    else 
-    {
-        echo "0 results";
-    }
 
 
     // DEFINE VARIABLES AND SET TO EMPTY VALUES
