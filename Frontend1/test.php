@@ -1,3 +1,18 @@
+<?php
+
+session_start();
+
+$_SESSION["test"] = 1;
+
+unset($_SESSION["test"]);
+
+echo $_SESSION["test"];
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,48 +25,13 @@
 
 <body>
 
-<div class="container mt-3">
-  <h2>Button Styles</h2>
-  <button type="button" class="btn">Basic</button>
-  <button type="button" class="btn btn-primary">Primary</button>
-  <button type="button" class="btn btn-secondary">Secondary</button>
-  <button type="button" class="btn btn-success">Success</button>
-  <button type="button" class="btn btn-info">Info</button>
-  <button type="button" class="btn btn-warning">Warning</button>
-  <button type="button" class="btn btn-danger">Danger</button>
-  <button type="button" class="btn btn-dark">Dark</button>
-  <button type="button" class="btn btn-light">Light</button>
-  <button type="button" class="btn btn-link">Link</button>      
-</div>
 
-<!-- <h2>What Can JavaScript Do?</h2> -->
-
-<!-- <p id="demo">JavaScript can change HTML content.</p>
-
-<button type="button" onclick='recognition.start();'>Click Me!</button>
-
-<div class = "texts">
-  <p>Test</p>
-</div> -->
-
-<!-- <button id="btn">Speak</button> -->
 
 </body>
 
 <script>
 
-document.getElementById("btn")
-.addEventListener("click", () => {
 
-  var msg = "Reservoir";
-  const utterance = new SpeechSynthesisUtterance(msg);
-
-  utterance.pitch = 1;
-  utterance.rate = 0.5;
-  utterance.volume = 1;
-  speechSynthesis.speak(utterance)
-
-})
 
 </script>
 

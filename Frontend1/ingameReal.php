@@ -4,12 +4,19 @@ require 'connect.php';
 
 session_start();
 
-$gameOver = false;
+$gameOver = False;
 
+
+if (isset($_POST["tryAgain"]))
+{
+  $_SESSION["score"] = -1;
+  header("Location: ingameReal.php");
+}
 
 
 if (!($_SERVER["REQUEST_METHOD"] == "POST"))
 {
+
   
   $sql = "SELECT * FROM medium";
   $result = mysqli_query($conn, $sql);
@@ -30,11 +37,9 @@ if (!($_SERVER["REQUEST_METHOD"] == "POST"))
   }
 }
 
+
+
 }
-
-print_r($_SESSION["medium_word"]);
-echo "<br>";
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -48,9 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $_SESSION["lives"]--;
     if ($_SESSION["lives"] == 0)
     {
-      unset($_SESSION["score"]);
-      unset($_SESSION["lives"]);
-      $gameover = True;
+      $gameOver = True;
     }
   }
 
@@ -72,7 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
   $_SESSION["medium_correct"] = array_values($_SESSION["medium_correct"]);
   $_SESSION["medium_img"] = array_values($_SESSION["medium_img"]);
 
-  echo "<br><br> changed: " . print_r($_SESSION["medium_word"]);
    
 }
 
@@ -125,30 +127,44 @@ background-size: 100% 100%;}
 <body>
 
 <?php
+if (!($gameOver))
+{
 echo "<div class='container mt-3'>";
   echo "<h2 class='h2 text-center text-light'>" . $_SESSION["medium_word"][$randomWord] . "</h2>";
   echo "<img class='img-fluid w-25 h-25 mx-auto d-block' src='" . $_SESSION["medium_img"][$randomWord] . "' alt='New York'>"; 
-  echo "<form action = 'htmlspecialchars(" . $_SERVER["PHP_SELF"] . ") method='POST'>";
+  echo "<form action = '" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>";
   echo "<div class='grid gap-3 mt-3 text-center'>";
     echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c1' id='choice1' autocomplete='off'>";
-    echo "<label class="btn btn-primary" for="choice1"><?php echo $_SESSION["medium_c1"][$randomWord]; ?></label>
-    <input type="radio" onclick="enableSubmit()" class="btn-check" name="choice" value="c2" id="choice2" autocomplete="off">
-    <label class="btn btn-primary" for="choice2"><?php echo $_SESSION["medium_c2"][$randomWord]; ?></label>
-    <input type="radio" onclick="enableSubmit()" class="btn-check" name="choice" value="c3" id="choice3" autocomplete="off">
-    <label class="btn btn-primary" for="choice3"><?php echo $_SESSION["medium_c3"][$randomWord]; ?></label>
-    <input type="radio" onclick="enableSubmit()" class="btn-check" name="choice" value="c4" id="choice4" autocomplete="off">
-    <label class="btn btn-primary" for="choice4"><?php echo $_SESSION["medium_c4"][$randomWord]; ?></label>
+    echo "<label class='btn btn-primary' id = 'label1' for='choice1'>" . $_SESSION["medium_c1"][$randomWord] . "</label>";
+    echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c2' id='choice2' autocomplete='off'>";
+    echo "<label class='btn btn-primary' id = 'label2' for='choice2'>" . $_SESSION["medium_c2"][$randomWord] . "</label>";
+    echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c3' id='choice3' autocomplete='off'>";
+    echo "<label class='btn btn-primary' id = 'label3' for='choice3'>" . $_SESSION["medium_c3"][$randomWord] . "</label>";
+    echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c4' id='choice4' autocomplete='off'>";
+    echo "<label class='btn btn-primary' id = 'label4' for='choice4'>" . $_SESSION["medium_c4"][$randomWord] . "</label>";
 
-    <input type="hidden" name="randomWord" value="<?php echo $randomWord ?>">
-  </div>
-  <div class="text-center mt-3 mb-3">
-    <input type="submit" value="Submit" id="submit" class="btn btn-outline-primary btn-lg" disabled>
-  </div>
-  </form>
+    echo "<input type='hidden' name='randomWord' value='" . $randomWord . "'>";
+  echo "</div>";
+  echo "<div class='text-center mt-3 mb-3'>";
+    echo "<input type='submit' value='Submit' id='submit' class='btn btn-outline-primary btn-lg' disabled>";
+
+  echo "</div>";
+  echo "</form>";
 
   
-</div>
-
+echo "</div>";
+}
+else
+{
+  echo "<div class='container mt-3 text-center'>";
+  echo "<h2 class='h2 text-center text-light'> Game over</h2>";
+  echo "<form action = '" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>";
+  // echo "<input type='submit' name='tryAgain' value='Try Again' id='tryAgain' class='btn btn-outline-primary btn-lg'>";
+  echo "<input type='submit' name='tryAgain' value='Try Again' id='submit' class='btn btn-outline-primary btn-lg'>";
+  echo "<input type='submit' name='return' value='Return to Main Menu' id='submit' class='btn btn-outline-primary btn-lg'>";
+  echo "</form>";
+  echo "</div>";
+}
 ?>
 
 
@@ -160,6 +176,41 @@ function enableSubmit()
 {
   document.getElementById("submit").disabled = false;
 }
+
+
+
+
+// Audio 
+document.getElementById("choice1")
+.addEventListener("click", ()=>{
+  var msg = document.getElementById("label1").textContent;
+  const utterance = new SpeechSynthesisUtterance(msg);
+  speechSynthesis.speak(utterance);
+})
+
+document.getElementById("choice2")
+.addEventListener("click", ()=>{
+  var msg = document.getElementById("label2").textContent;
+  const utterance = new SpeechSynthesisUtterance(msg);
+  speechSynthesis.speak(utterance);
+})
+
+document.getElementById("choice3")
+.addEventListener("click", ()=>{
+  var msg = document.getElementById("label3").textContent;
+  const utterance = new SpeechSynthesisUtterance(msg);
+  speechSynthesis.speak(utterance);
+})
+
+document.getElementById("choice4")
+.addEventListener("click", ()=>{
+  var msg = document.getElementById("label4").textContent;
+  const utterance = new SpeechSynthesisUtterance(msg);
+  speechSynthesis.speak(utterance);
+})
+
+
+
 
 </script>
 
