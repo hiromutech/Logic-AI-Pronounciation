@@ -5,12 +5,18 @@ require 'connect.php';
 session_start();
 
 $gameOver = False;
-
+$correct = False;
+$wrong = False;
 
 if (isset($_POST["tryAgain"]))
 {
   $_SESSION["score"] = -1;
   header("Location: ingameReal.php");
+}
+else if (isset($_POST["return"]))
+{
+  $_SESSION["score"] = -1;
+  header("Location: homePage.php");
 }
 
 
@@ -47,14 +53,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
   if ($_POST["choice"] == $_SESSION["medium_correct"][$_POST["randomWord"]])
   {
     $_SESSION["score"]++;
+    $correct = True;
   }
   else
   {
     $_SESSION["lives"]--;
+    $wrong = True;
     if ($_SESSION["lives"] == 0)
     {
       $gameOver = True;
     }
+      
   }
 
   unset($_SESSION["medium_id"][$_POST["randomWord"]]);
@@ -82,19 +91,13 @@ if (empty($_SESSION["score"]))
 {
   $_SESSION["score"] = 0;
 }
-else
-{
-  echo "Score: " . $_SESSION["score"] . "<br>";
-}
+
 
 if (empty($_SESSION["lives"]))
 {
   $_SESSION["lives"] = 3;
 }
-else
-{
-  echo "Lives: " . $_SESSION["lives"] . "<br>";
-}
+
 
 $randomWord = rand(0, count($_SESSION["medium_id"]) - 1);
 
@@ -113,6 +116,9 @@ $randomWord = rand(0, count($_SESSION["medium_id"]) - 1);
 <!-- Latest compiled JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+
+
+
 <style>
 
 body {background-image:url(https://e0.pxfuel.com/wallpapers/378/851/desktop-wallpaper-stars-purple-cosmos-space-cosmos-universe.jpg);
@@ -130,8 +136,19 @@ background-size: 100% 100%;}
 if (!($gameOver))
 {
 echo "<div class='container mt-3'>";
+echo "<div class='row'>";
+  echo "<div class='col h-50'> <p style='color:white'><img style='width:50%; height:50%;' src='images/star.gif'>" . $_SESSION["score"] . "</p></div>";
+  echo "<div class='col h-50'></div>";
+  echo "<div class='col h-50'></div>";
+  echo "<div class='col h-50'></div>";
+  echo "<div class='col h-50'></div>";
+  echo "<div class='col h-50'> <p style='color:white'><img style='width:50%; height:50%;' src='images/heart.gif'>" . $_SESSION["lives"] . "</p></div>";
+echo "</div>";
+
+
   echo "<h2 class='h2 text-center text-light'>" . $_SESSION["medium_word"][$randomWord] . "</h2>";
-  echo "<img class='img-fluid w-25 h-25 mx-auto d-block' src='" . $_SESSION["medium_img"][$randomWord] . "' alt='New York'>"; 
+  echo "<img style='height:15%;width:15%' class='img mx-auto d-block' src='" . $_SESSION["medium_img"][$randomWord] . "' alt='New York'>";
+ 
   echo "<form action = '" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>";
   echo "<div class='grid gap-3 mt-3 text-center'>";
     echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c1' id='choice1' autocomplete='off'>";
@@ -153,11 +170,13 @@ echo "<div class='container mt-3'>";
 
   
 echo "</div>";
+
 }
 else
 {
   echo "<div class='container mt-3 text-center'>";
   echo "<h2 class='h2 text-center text-light'> Game over</h2>";
+  echo "<div class='text-center'> <p style='color:white'><img style='width:10%; height:15%;' src='images/star.gif'>" . $_SESSION["score"] . "</p></div>";
   echo "<form action = '" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>";
   // echo "<input type='submit' name='tryAgain' value='Try Again' id='tryAgain' class='btn btn-outline-primary btn-lg'>";
   echo "<input type='submit' name='tryAgain' value='Try Again' id='submit' class='btn btn-outline-primary btn-lg'>";
@@ -168,17 +187,40 @@ else
 ?>
 
 
+<!-- Audio -->
+<audio id="correct" src="audio/correct.mp3"></audio>
+<audio id="wrong" src="audio/wrong.mp3"></audio>
 
+
+<?php
+
+if ($correct)
+{
+  echo '<script>';
+  echo 'var audio = document.getElementById("correct");';
+  echo 'audio.play();';
+  echo '</script>';
+}
+else  if ($wrong)
+{
+  echo '<script>';
+  echo 'var audio = document.getElementById("wrong");';
+  echo 'audio.play();';
+  echo '</script>';
+}
+
+?>
 </body>
 
-<script>
+<script type="text/javascript">
+
+
+
+
 function enableSubmit()
 {
   document.getElementById("submit").disabled = false;
 }
-
-
-
 
 // Audio 
 document.getElementById("choice1")
@@ -186,6 +228,7 @@ document.getElementById("choice1")
   var msg = document.getElementById("label1").textContent;
   const utterance = new SpeechSynthesisUtterance(msg);
   speechSynthesis.speak(utterance);
+;
 })
 
 document.getElementById("choice2")
@@ -208,6 +251,8 @@ document.getElementById("choice4")
   const utterance = new SpeechSynthesisUtterance(msg);
   speechSynthesis.speak(utterance);
 })
+
+
 
 
 
