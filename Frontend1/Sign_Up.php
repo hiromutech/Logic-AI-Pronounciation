@@ -208,7 +208,7 @@
 <body>
 <center>
     <p>&nbsp;</p>
-    <img  src="Logo1.png" alt="SpeakWiz Logo" style="height:100px"; width:100px; class="LOGO">
+    <img  src="images/Logo1.png" alt="SpeakWiz Logo" style="height:100px"; width:100px; class="LOGO">
     <h1>SIGN-UP</h1>
 
     <form action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
@@ -243,14 +243,14 @@
     <span class="error"> <?php echo $passwordErr; ?></span>
     <div class="pass">
         <input type="password" name="password" placeholder=" Password" style="width: 300px; height: 25px;" id="password">
-        <img src="eyeclose" id="eyeicon">
+        <img src="images/eyeclose.png" id="eyeicon">
     </div>
 
     <p></p>
 
     <div class="pass1">
         <input type="password" name="password1" placeholder=" Re-type Password" style="width: 300px; height: 25px;" id="password1">
-        <img src="eyeclose" id="eyeicon1">
+        <img src="images/eyeclose.png" id="eyeicon1">
     </div>
 
 
@@ -261,10 +261,10 @@
         eyeicon.onclick = function(){
             if (password.type =="password"){
                 password.type = "text";
-                eyeicon.src = "eyeopen";
+                eyeicon.src = "images/eyeopen.jpg";
             }else {
                 password.type = "password";
-                eyeicon.src = "eyeclose";
+                eyeicon.src = "images/eyeclose.png";
             }
         }
     </script>
@@ -276,10 +276,10 @@
     eyeicon1.onclick = function(){
         if (password1.type =="password"){
             password1.type = "text";
-            eyeicon1.src = "eyeopen";
+            eyeicon1.src = "images/eyeopen.jpg";
         }else {
             password1.type = "password";
-            eyeicon1.src = "eyeclose";
+            eyeicon1.src = "images/eyeclose.png";
         }
     }
 </script>
