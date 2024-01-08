@@ -70,6 +70,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
       
   }
 
+  $c = "easy_" . $_SESSION["easy_correct"][$_POST["randomWord"]];
+
+  $correctWord = $_SESSION[$c][$_POST["randomWord"]];
+
   unset($_SESSION["easy_id"][$_POST["randomWord"]]);
   unset($_SESSION["easy_word"][$_POST["randomWord"]]);
   unset($_SESSION["easy_c1"][$_POST["randomWord"]]);
@@ -257,6 +261,11 @@ h6
   font-style:italic;
 }
 
+hr.rounded {
+  border-top: 8px solid white;
+  border-radius: 5px;
+}
+
 
 
 </style>
@@ -282,7 +291,7 @@ echo '<div class="offcanvas show offcanvas-bottom h-auto" style="background-colo
   </div>
   <div style="color:#FF464E" class="offcanvas-body">
     <p style="color:#FF464E" >Correct Answer:</p>
-    <p></p> 
+    <p>' . $correctWord . '</p> 
     <button style="background-color: #FF464E; box-shadow: 0 5px 0 #EA3741;"class="submit" data-bs-dismiss="offcanvas" type="button">GOT IT</button>
   </div>
 </div>';
@@ -332,11 +341,13 @@ echo '<nav class="navbar sticky-top" style="background-color:#8000ff;">
 
 echo "<div class='container-fluid mt-3 '>";
 
-  echo "<div>";
+  echo "<div class='mt-5'>";
   echo "<h2 class='text-center' style='color:white;'>" . $_SESSION["easy_word"][$randomWord] . "</h2>";
   echo "</div>";
   echo "<h5 class='text-center' > - " . $_SESSION["easy_meaning"][$randomWord] . "</h5>";
   echo "<h6 class='text-center' >" . $_SESSION["easy_example"][$randomWord] . "</h6>";
+  echo "<hr class='rounded mt-5'>";
+
   echo "<div class='mt-5'>";
   echo "<form action = '" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>";
     
@@ -399,9 +410,9 @@ else
 
 
 <!-- Audio -->
-<audio id="correct" src="audio/correct.mp3"></audio>
-<audio id="wrong" src="audio/wrong.mp3"></audio>
 
+<audio id="correct" src="audio/correct2.mp3"></audio>
+<audio id="wrong" src="audio/wrong2.mp3"></audio>
 
 <?php
 
