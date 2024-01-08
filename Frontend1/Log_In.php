@@ -1,3 +1,73 @@
+<?php
+    require 'connect.php';
+
+    session_start();
+    session_unset();
+    
+    if(!$conn){
+        echo 'Connection error: ' . mysqli_connect_error();
+    }
+    // DEFINE VARIABLES AND SET TO EMPTY VALUES
+    $emailErr = $passwordErr ="";
+    $email = $password = "";
+    
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    {        
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        else
+        {
+            $complete++;
+        }
+
+        // EMAIL
+        if (empty($_POST["email"]))
+        {
+            $emailErr = "Email is Required";
+        }
+        else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        {
+            $emailErr = "Invalid Email Format";
+            $email = "";
+        }
+        
+        else
+        {
+            $complete++;
+        }
+                // PASSWORD
+                $passLen = strlen($password);
+                if (empty($_POST["password"]))
+                {
+                    $passwordErr = "Password is Required";
+                }
+                else if (empty($_POST["password1"]))
+
+    // IF ALL REQUIREMENTS ARE MET ADD ALL DATA TO SESSION THEN GO TO THE NEXT PAGE
+    if ($complete == 6)
+    {
+
+        $_SESSION['fullName'] = $fullName;
+        $_SESSION['userName'] = $userName;
+        $_SESSION['email'] = $email;
+        $_SESSION['contactNum'] = $contactNum;
+        $_SESSION['password'] = $password;
+
+        header('Location: homePage.php');
+    }
+
+}
+    function clean_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -162,7 +232,7 @@
         }
     </script>
 
-    <a href="a" style="color: palevioletred; font-size: 12px;">FORGOT PASSWORD?</a>
+    <a href="forgot_password.php" style="color: palevioletred; font-size: 12px;">FORGOT PASSWORD?</a>
 
     <p>&nbsp;</p>
     
