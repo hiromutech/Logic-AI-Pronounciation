@@ -15,20 +15,7 @@
     background-attachment: fixed;
     background-size: 100% 100%;}
     a {color: white; text-decoration: none;}
-    .conti_sign {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                width: 15%;
-                text-align: center;
-                padding : 8px 20px;
-                border-radius: 25px;
-                margin: 0 10px
-            }
-            .conti_sign {
-                background-color: violet;
-            }
-    a:hover {color: palevioletred; background-color: pink;}
+
 
 </style>
 <body>
