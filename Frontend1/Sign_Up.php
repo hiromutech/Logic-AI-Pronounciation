@@ -293,7 +293,7 @@
     <a href="Terms.php" style="color: palevioletred;"><u>Terms, Policies, & Conditions</u></a>
     <p></p>
 
-    <input type="submit" name = "submit" style="background-color:pink;" class="btn_log">
+    <input type="submit" name = "submit"  class="submit">
     <p style="color: white;font-size: 12px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">OR</p>
 
     <script src="https://accounts.google.com/gsi/client" async></script>
@@ -320,9 +320,9 @@
     </div>
     
     &nbsp;
-    <a href="Log_In.php" class="btn_sign">LOG IN</a>
+    <a href="Log_In.php" class="submit">LOG IN</a>
     &nbsp;
-    <a href="Title_Page.php" class="btn_back">BACK</a>
+    <a href="Title_Page.php" class="submit">BACK</a>
 
     <p>&nbsp;</p>
 	

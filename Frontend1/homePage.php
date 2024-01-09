@@ -1,10 +1,42 @@
 <?php
 
-if ($_SERVER["REQUEST_METHOD"] == "POST")
+if (isset($_POST["start"]))
 {
     header("Location: ingameReal.php");
 }
 
+$page = "";
+
+if (!($_SERVER["REQUEST_METHOD"] == "POST"))
+{
+  $page = "play";
+}
+
+if (isset($_POST["play"]))
+{
+  $page = "play";
+}
+else if (isset($_POST["quests"]))
+{
+  $page = "quests";
+}
+else if (isset($_POST["shop"]))
+{
+  $page = "shop";
+}
+else if (isset($_POST["settings"]))
+{
+  $page = "settings";
+}
+else if (isset($_POST["profile"]))
+{
+  $page = "profile";
+}
+else if (isset($_POST["signOut"]))
+{
+  session_unset();
+  header("Location: Sign_Up.php");
+}
 
 ?>
 
@@ -40,6 +72,7 @@ background-repeat: no-repeat;
 background-attachment: fixed;
 background-size: 100% 100%;
 font-family: "Quicksand";}
+
 
 
 
@@ -155,6 +188,17 @@ hr.rounded {
   border-radius: 5px;
 }
 
+.sidebar{
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+
 </style>
 
 </head>
@@ -170,18 +214,20 @@ hr.rounded {
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
-                        <a href="#" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">START</span>
-                        </a>
+                        <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method ="post">
+                          <input type="submit" name = "play" value="PLAY" class="sidebar ms-1 mb-3 d-none d-sm-inline">
+                        </form>
                     </li>
 
                     <li>
-                        <a href="#" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">QUESTS</span></a>
+                        <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method ="post">
+                          <input type="submit" name = "quests" value="QUESTS" class="sidebar ms-1 mb-3 d-none d-sm-inline">
+                        </form>
                     </li>
                     <li>
-                        <a href="#" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">SHOP</span> </a>
+                        <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method ="post">
+                          <input type="submit" name = "shop" value="SHOP" class="sidebar ms-1 mb-3 d-none d-sm-inline">
+                        </form>
                     </li>
                 </ul>
                 <hr>
@@ -191,36 +237,163 @@ hr.rounded {
                         <span class="d-none d-sm-inline mx-1">User</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li>
+                          <form class="dropdown-item" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method ="post">
+                            <input type="submit" name = "settings" value="Settings" class="sidebar">
+                          </form>
+                        </li>
+                        <li>
+                          <form class="dropdown-item" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method ="post">
+                            <input type="submit" name = "profile" value="Profile" class="sidebar">
+                          </form>
+                        </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        <li>
+                          <form class="dropdown-item" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method ="post">
+                            <input type="submit" name = "signOut" value="Sign Out" class="sidebar">
+                          </form>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="col py-3">
-            <div class='container text-center mt-3'>
-            <h2 class='h2 text-light'>Start Game</h2>
-            <form  action = "<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method='POST'>
-            <input type='submit' value='Start'  class='submit'>
-            </form>
+        <?php
+        if ($page == "play")
+        {
+            echo '<div class="col py-3">
+                <div class="container text-center mt-3">
+                <h2 class="h2 text-light">Start Game</h2>
+                <form  action = "' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="POST">
+                <input name="start" type="submit" value="Start"  class="submit">
+                </form>
+                </div>
             </div>
-        </div>
-        <div class="col py-3">
+            <div class="col py-3">
 
-            <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">3 </h3>
+                <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">3 </h3>
 
-            <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-                <h5 class="card-title">Light card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Light card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
+                </div>
+                </div>
+        
+            </div>';
+        }
+        else if ($page == "quests")
+        {
+          echo '<div class="col py-3">
+                <div class="container text-center mt-3">
+                <h2 class="h2 text-light">QUESTS</h2>
+                </div>
             </div>
+            <div class="col py-3">
+
+                <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">3 </h3>
+
+                <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Light card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
+                </div>
+                </div>
+        
+            </div>';
+        }
+        else if ($page == "shop")
+        {
+          echo '<div class="col py-3">
+                <div class="container text-center mt-3">
+                <h2 class="h2 text-light">SHOP</h2>
+                </div>
             </div>
-        </div>
+            <div class="col py-3">
+
+                <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">3 </h3>
+
+                <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Light card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
+                </div>
+                </div>
+        
+            </div>';
+        }
+        else if ($page == "settings")
+        {
+          echo '<div class="col py-3">
+                <div class="container text-center mt-3">
+                <h2 class="h2 text-light">SETTINGS</h2>
+                <h4> Change Account Info </h4>
+                <form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method = "post">
+                <label for="username">Username: </label>
+                <input type="text" class="form-control" name="username"><br>
+                <label for="password">Password: </label>
+                <input type="text" class="form-control" name="password"><br>
+                <label for="password1">Confirm Password: </label>
+                <input type="text" class="form-control" name="password1"><br>
+                
+                <div class="form-floating">
+                <select class="form-select" id="sel1" name="sellist">
+                  <option>Easy</option>
+                  <option>Medium</option>
+                  <option>Hard</option>
+                </select>
+                <label for="sel1" class="form-label">Difficulty:</label>
+                </div>
+
+                <br>
+
+                <input type="submit" class="submit" name="submit"><br>
+
+                </form>
+                </div>
+            </div>
+
+            <div class="col py-3">
+                <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">3 </h3>
+
+                <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Light card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
+                </div>
+                </div>
+        
+            </div>';
+        }
+        else if ($page == "profile")
+        {
+          echo '<div class="col py-3">
+                <div class="container text-center mt-3">
+                <h2 class="h2 text-light">PROFILE</h2>
+                <h3 class="mt-5">Username</h3>
+                <img src="images/avatar.png" alt="avatar" style="height:50%; width: 50%;" class="img-fluid rounded-circle">
+                </div>
+            </div>
+            <div class="col py-3">
+
+                <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">3 </h3>
+
+                <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Light card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
+                </div>
+                </div>
+        
+            </div>';
+        }
+        ?>
     </div>
 </div>
 

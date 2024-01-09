@@ -143,18 +143,11 @@ $randomWord = rand(0, count($_SESSION["easy_id"]) - 1);
   src: url(Roboto-Light.ttf);
 }
 
-
-
-
 body {background-color: #111F23;
 background-repeat: no-repeat;
 background-attachment: fixed;
 background-size: 100% 100%;
 font-family: "Quicksand";}
-
-
-
-
 
 /* CSS */
 .button-19 {
@@ -209,8 +202,8 @@ font-family: "Quicksand";}
 }
 
 .button-19:hover:not(:disabled) {
-  filter: brightness(1.1);
-  -webkit-filter: brightness(1.1);
+  filter: brightness(1.5);
+  -webkit-filter: brightness(1.5);
 }
 
 .button-19:disabled {
@@ -248,6 +241,10 @@ font-family: "Quicksand";}
   transform: translateY(5px);
 }
 
+.submit:hover{
+  filter: brightness(1.5);
+}
+
 h5
 {
   color:white; 
@@ -265,8 +262,6 @@ hr.rounded {
   border-top: 8px solid white;
   border-radius: 5px;
 }
-
-
 
 </style>
 
