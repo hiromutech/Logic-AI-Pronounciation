@@ -8,7 +8,7 @@ $confirmationErr = "";
 if (isset($_POST['back']))
 {
     $_SESSION["Q2"] = "";
-    header("Location: Q2.php");
+    header("Location: userQ2.php");
 }
 
 if (isset($_POST['submit']))
@@ -33,7 +33,7 @@ if (isset($_POST['submit']))
 
         }
 
-        header("location: Q4.php");
+        header("location: userQ4.php");
     }
 
     if (empty($_POST['confirmation']) && empty($_POST['others']))
@@ -51,7 +51,7 @@ if (isset($_POST['submit']))
         <link rel="stylesheet" href="Sign_Up.css">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title> SpeakWiz</title>
-        <link rel="icon" type="image/png" href="Logo1.png">
+        <link rel="icon" type="image/png" href="images/Logo1.png">
         
 	</head>
 
@@ -60,7 +60,7 @@ if (isset($_POST['submit']))
     <p>&nbsp;</p>
     <img  src="images/Logo1.png" alt="SpeakWiz Logo" style="height:100px"; width:100px; class="LOGO">
     <h1>SURVEY</h1>
-    <h3>3. WHAT DO YOU HOPE TO ACHIEVE IN PLAYING THIS 'ENGLISH <BR> PRONOUNCIATION ENHANCEMENT GAME (SPEAKWIZ)?</h3>
+    <h3 style="color:white">3. WHAT DO YOU HOPE TO ACHIEVE IN PLAYING THIS 'ENGLISH <BR> PRONOUNCIATION ENHANCEMENT GAME (SPEAKWIZ)?</h3>
     <h5 class = "error"><?php echo $confirmationErr; ?> </h5>
     <h5>(CHECK WHICH APPLIES)</h5>
 

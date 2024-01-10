@@ -4,26 +4,35 @@ require 'connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
+    echo $_POST['word'] . "<br>";
+    echo $_POST['c1'] . "<br>";
+    echo $_POST['c2'] . "<br>";
+    echo $_POST['c3'] . "<br>";
+    echo $_POST['c4'] . "<br>";
+    echo $_POST['correct'] . "<br>";
+    echo $_POST['meaning'] . "<br>";
+    echo $_POST['example'] . "<br><br><br>";
+
     if ($_POST["category"] == "easy")
     {
-        $sql = "INSERT INTO `easy`(`easy_id`, `easy_word`, `easy_c1`, `easy_c2`, 
-        `easy_c3`, `easy_c4`, `easy_correct`, `easy_img`) VALUES ('','" . $_POST['word'] . "' , '" . $_POST['c1'] . 
+        $sql = "INSERT INTO `easy`( `easy_word`, `easy_c1`, `easy_c2`, 
+        `easy_c3`, `easy_c4`, `easy_correct`, `easy_meaning`, `easy_example`) VALUES ('" . $_POST['word'] . "' , '" . $_POST['c1'] . 
         "' , '" . $_POST['c2'] . "' , '" . $_POST['c3'] . "' , '" . $_POST['c4'] .  "' , '" . $_POST['correct'] . 
-        "' , '" . $_POST['img'] . "')";
+        "' , '" . $_POST['meaning'] . "' , '" . $_POST['example'] . "')";
     }
     else if ($_POST["category"] == "medium")
     {
         $sql = "INSERT INTO `medium`(`medium_id`, `medium_word`, `medium_c1`, `medium_c2`, 
-        `medium_c3`, `medium_c4`, `medium_correct`, `medium_img`) VALUES ('','" . $_POST['word'] . "' , '" . $_POST['c1'] . 
+        `medium_c3`, `medium_c4`, `medium_correct`, `medium_meaning`, `medium_example`) VALUES ('','" . $_POST['word'] . "' , '" . $_POST['c1'] . 
         "' , '" . $_POST['c2'] . "' , '" . $_POST['c3'] . "' , '" . $_POST['c4'] . "' , '" . $_POST['correct'] . 
-        "' , '" . $_POST['img'] . "')";
+        "' , '" . $_POST['meaning'] . "' , '" . $_POST['example'] . "')";
     }
     else if ($_POST["category"] == "hard")
     {
         $sql = "INSERT INTO `hard`(`hard_id`, `hard_word`, `hard_c1`, `hard_c2`, 
-        `hard_c3`, `hard_c4`, `hard_correct`, `hard_img`) VALUES ('','" . $_POST['word'] . "' , '" . $_POST['c1'] . 
+        `hard_c3`, `hard_c4`, `hard_correct`, `hard_meaning` , `hard_example`) VALUES ('','" . $_POST['word'] . "' , '" . $_POST['c1'] . 
         "' , '" . $_POST['c2'] . "' , '" . $_POST['c3'] . "' , '" . $_POST['c4'] .  "' , '" . $_POST['correct'] . 
-        "' , '" . $_POST['img'] . "')";
+        "' , '" . $_POST['meaning'] . "' , '" . $_POST['example'] . "')";
     }
     
     $result = mysqli_query($conn, $sql);
@@ -60,7 +69,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     <option value="c4">c4</option>
 </select>
 <br>
-<textarea name="img" rows="4" cols="50" placeholder="img"></textarea>
+<textarea name="meaning" rows="4" cols="50" placeholder="meaning"></textarea>
+<br>
+<textarea name="example" rows="4" cols="50" placeholder="example"></textarea>
 <br>
 <input type = "submit" name = "submit" value = "submit"> <br>
 </form>

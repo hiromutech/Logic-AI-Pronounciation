@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     else
     {
         $_SESSION["Q1"] = $_POST["confirmation"];
-        header("Location: Q2.php");
+        header("Location: userQ2.php");
     }
 
 }
@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     <p>&nbsp;</p>
     <img  src="images/Logo1.png" alt="SpeakWiz Logo" style="height:100px"; width:100px; class="LOGO">
     <h1>SURVEY</h1>
-    <h3>1. HOW CONFIDENT ARE YOU IN YOUR ENGLISH PRONOUNCIATION?</h3>
+    <h3 style="color:white">1. HOW CONFIDENT ARE YOU IN YOUR ENGLISH PRONOUNCIATION?</h3>
     <h5 class = "error"><?php echo $confirmationErr; ?></h5>
     <h5>(CHECK WHICH APPLIES)</h5>
 
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     <br>
     <input type = "submit" class="submit" value="NEXT">
     &nbsp;
-    <a href="Survey.php" class="submit">BACK</a>
+    <a href="userSurvey.php" class="submit">BACK</a>
 
     </form>
 	

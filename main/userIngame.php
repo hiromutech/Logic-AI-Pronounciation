@@ -11,18 +11,19 @@ $wrong = False;
 if (isset($_POST["tryAgain"]))
 {
   $_SESSION["score"] = -1;
-  header("Location: ingameReal.php");
+  header("Location: userIngame.php");
 }
 else if (isset($_POST["return"]))
 {
-  $_SESSION["score"] = -1;
-  header("Location: homePage.php");
+  unset($_SESSION["score"]);
+  unset($_SESSION["lives"]);
+  header("Location: userHomePage.php");
 }
 
 
 if (!($_SERVER["REQUEST_METHOD"] == "POST"))
 {
-
+  $_SESSION["score"] = 0;
   
   $sql = "SELECT * FROM easy";
   $result = mysqli_query($conn, $sql);
@@ -292,6 +293,7 @@ echo '<div class="offcanvas show offcanvas-bottom h-auto" style="background-colo
 </div>';
 }
 
+// Modal
 
 echo '<div class="modal fade" id="myModal">
   <div class="modal-dialog modal-dialog-centered">
@@ -301,9 +303,34 @@ echo '<div class="modal fade" id="myModal">
         <h4 class="modal-title w-100">PAUSE</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-
+      
       <div class="modal-body border-0 text-center" style="background-color: #4B4B4B; color:white">
-      <a href="homePage.php" type="button" class="submit"> Return to main menu</a>
+      <button class="submit" type="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#sure">RETURN TO MAIN MENU</button>
+      </div>
+
+      <div class="modal-footer border-0" style="background-color: #4B4B4B; color:white; ">
+      
+      </div>
+
+
+    </div>
+  </div>
+</div>';
+
+echo '<div class="modal fade" id="sure">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header border-0 text-center" style="background-color: #4B4B4B; color:white; ">
+        <h4 class="modal-title w-100">ARE YOU SURE?</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body border-0 text-center" style="background-color: #4B4B4B; color:white">
+      <p> Run will not be saved </p>
+      <form action = "' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="POST">
+      <input type="submit" name="return" value="YES" class="submit w-50">
+      </form>
+      <button type="button" class="submit w-50 mt-3" data-bs-dismiss="modal">GO BACK</button>
       </div>
 
       <div class="modal-footer border-0" style="background-color: #4B4B4B; color:white; ">

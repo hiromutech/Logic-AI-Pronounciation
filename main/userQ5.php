@@ -3,14 +3,9 @@
 session_start();
 
 
-if (isset($_POST['back']))
-{
-    $_SESSION['Q3'] = "";
-    header("Location: Q3.php");
-}
 
 $confirmationErr = "";
-if (isset($_POST['submit']))
+if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     if (empty($_POST["confirmation"]))
     {
@@ -18,8 +13,8 @@ if (isset($_POST['submit']))
     }
     else
     {
-        $_SESSION["Q4"] = $_POST["confirmation"];
-        header("Location: Q5.php");
+        $_SESSION["Q5"] = $_POST["confirmation"];
+        header("Location: userSubmit.php");
     }
 
 }
@@ -30,8 +25,7 @@ if (isset($_POST['submit']))
     <link rel="stylesheet" href="Sign_Up.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title> SpeakWiz</title>
-        <link rel="icon" type="image/png" href="Logo1.png">
-        
+        <link rel="icon" type="image/png" href="images/Logo1.png">
 	</head>
 
 <body>
@@ -39,43 +33,45 @@ if (isset($_POST['submit']))
     <p>&nbsp;</p>
     <img  src="images/Logo1.png" alt="SpeakWiz Logo" style="height:100px"; width:100px; class="LOGO">
     <h1>SURVEY</h1>
-    <h3>4.HOW LONG IS YOUR DAILY ALLOTED <br> TIME IN PLAYING SPEAKWIZ?</h3>
+    <h3 style="color:white">5.CHOOSE YOUR LEVEL OF DIFFICULTY</h3>
     <h5 class = "error"><?php echo $confirmationErr; ?></h5>
     <h5>(CHECK WHICH APPLIES)</h5>
 
     <form action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
-    <input type="radio" name="confirmation" id="confirmation" value = "5"> 
+
+    <p></p>
+
+    <input type="radio" name="confirmation" id="confirmation" value = "Easy"> 
     <label for="radio">
-        <b>Light:</b> 5 minutes a day
+        <b>Magician:</b> Easy
     </label>
 
     <p></p>
 
-    <input type="radio" name="confirmation" id="confirmation" value = "10"> 
+    <input type="radio" name="confirmation" id="confirmation" value = "Medium"> 
     <label for="radio">
-        <b>Moderate:</b> 10 minutes a day
+        <b>Sourcerer:</b> Medium
     </label>
 
     <p></p>
 
-    <input type="radio" name="confirmation" id="confirmation" value = "15"> 
+    <input type="radio" name="confirmation" id="confirmation" value = "Hard"> 
     <label for="radio">
-        <b>Dedicated:</b> 15 minutes a day
+        <b>Wizard:</b> Hard
     </label>
 
     <p></p>
 
-    <input type="radio" name="confirmation" id="confirmation" value = "20"> 
-    <label for="radio">
-        <b>Intensive:</b> 20 minutes a day
-    </label>
 
-    <p></p>&nbsp;
+    <p></p>
 
+    &nbsp;
     <input type = "submit" name = "submit" class="submit" value = "NEXT">
     &nbsp;
-    <input type = "submit" name = "back" class="submit" value = "BACK">
-    </form>
+    <a href="userQ4.php" class="submit">BACK</a>
+
+        </form>
+	
 </center>
 
 </body>

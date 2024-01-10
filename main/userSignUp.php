@@ -13,9 +13,9 @@
     $sql = "SELECT userName, email, contactNum FROM users";
     $result = mysqli_query($conn, $sql);
 
-    $userNameCheck = [7];
-    $emailCheck = [7];
-    $contactNumCheck = [7];
+    $userNameCheck = [];
+    $emailCheck = [];
+    $contactNumCheck = [];
 
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
@@ -177,7 +177,7 @@
             $_SESSION['contactNum'] = $contactNum;
             $_SESSION['password'] = $password;
 
-            header('Location: Survey.php');
+            header('Location: userSurvey.php');
         }
 
     }

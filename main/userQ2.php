@@ -7,8 +7,6 @@ $confirmationErr = "";
 
 if (isset($_POST['submit']))
 {
-    var_dump(!empty($_POST['confirmation']));
-    var_dump(!empty($_POST['others']));
     if (!empty($_POST['confirmation']) || !empty($_POST['others']))
     {
         if (!empty($_POST['confirmation']))
@@ -27,7 +25,7 @@ if (isset($_POST['submit']))
 
         }
 
-        header("location: Q3.php");
+        header("location: userQ3.php");
     }
 
     if (empty($_POST['confirmation']) && empty($_POST['others']))
@@ -44,7 +42,7 @@ if (isset($_POST['submit']))
 	<head>
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title> SpeakWiz</title>
-        <link rel="icon" type="image/png" href="Logo1.png">
+        <link rel="icon" type="image/png" href="images/Logo1.png">
         <link rel="stylesheet" href="Sign_Up.css">
 	</head>
 
@@ -53,7 +51,7 @@ if (isset($_POST['submit']))
     <p>&nbsp;</p>
     <img  src="images/Logo1.png" alt="SpeakWiz Logo" style="height:100px"; width:100px; class="LOGO">
     <h1>SURVEY</h1>
-    <h3>2. WHY ARE YOU LEARNING ENGLISH PRONOUNCIATION?</h3>
+    <h3 style="color:white">2. WHY ARE YOU LEARNING ENGLISH PRONOUNCIATION?</h3>
     <h5 class = "error"><?php echo $confirmationErr; ?></h5>
     <h5>(CHECK WHICH APPLIES)</h5>
 
@@ -96,7 +94,7 @@ if (isset($_POST['submit']))
     &nbsp;
     <input type = "submit" name = "submit" class="submit" value = "NEXT">
     &nbsp;
-    <a href="Q1.php" class="submit">BACK</a>
+    <a href="userQ1.php" class="submit">BACK</a>
 
         </form>
 	

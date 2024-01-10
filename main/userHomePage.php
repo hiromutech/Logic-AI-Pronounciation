@@ -1,17 +1,23 @@
 <?php
 
+session_start();
+
+// Start Game
 if (isset($_POST["start"]))
 {
-    header("Location: ingameReal.php");
+    header("Location: userIngame.php");
 }
 
 $page = "";
 
+// First Launch
 if (!($_SERVER["REQUEST_METHOD"] == "POST"))
 {
   $page = "play";
 }
 
+
+// Navigate
 if (isset($_POST["play"]))
 {
   $page = "play";
@@ -35,7 +41,7 @@ else if (isset($_POST["profile"]))
 else if (isset($_POST["signOut"]))
 {
   session_unset();
-  header("Location: Sign_Up.php");
+  header("Location: userLoginTemp.php");
 }
 
 ?>
@@ -71,7 +77,8 @@ body {background-color: #111F23;
 background-repeat: no-repeat;
 background-attachment: fixed;
 background-size: 100% 100%;
-font-family: "Quicksand";}
+font-family: "Quicksand";
+color: white}
 
 
 
@@ -208,9 +215,10 @@ hr.rounded {
 <div class="container-fluid">
     <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+          <div class="sticky-top">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <span class="fs-5 d-none d-sm-inline"><img style="height:100px; width:100px" src="images/Logo.png">Speakwiz</span>
+                <a class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline"><img style="height:100px; width:100px" src="images/Logo.png"></span>
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
@@ -233,8 +241,8 @@ hr.rounded {
                 <hr>
                 <div class="dropdown pb-4">
                     <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="images/avatar.png" alt="hugenerd" style="height:70px; width:50px" class="rounded-circle">
-                        <span class="d-none d-sm-inline mx-1">User</span>
+                        <img src="images/avatar.png" alt="hugenerd" style="height:20%; width:20%" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-1"><?php echo $_SESSION["user"]["userName"]; ?> </span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                         <li>
@@ -256,6 +264,7 @@ hr.rounded {
                           </form>
                         </li>
                     </ul>
+                  </div>
                 </div>
             </div>
         </div>
@@ -288,7 +297,24 @@ hr.rounded {
         {
           echo '<div class="col py-3">
                 <div class="container text-center mt-3">
-                <h2 class="h2 text-light">QUESTS</h2>
+                  <h2 class="h2 text-light">QUESTS</h2>
+                  <div class="card border-secondary">
+      
+                    <div class="card-body" style="background-color:#111F23; color: white">
+                      <h5 class="card-title">Summoning</h5>
+                      <p class="card-text">Score a total of 100 points</p>
+                      <div class="progress">
+                        <div class="progress-bar" style="width:0%; background-color: #8000ff"></div>
+                      </div>
+                      <p class="mt-3"> <img src="images/potion.png" style="height;30px;width:30px;"> 10 </p>
+     
+  
+                      <form  action = "' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="POST">
+                        <input name="summoning" type="submit" value="Start"  class="btn btn-primary" style="background-color: #8000ff" disabled>
+                      </form>
+                    
+                    </div>
+                  </div>
                 </div>
             </div>
             <div class="col py-3">
@@ -300,6 +326,7 @@ hr.rounded {
                 <div class="card-body">
                     <h5 class="card-title">Light card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
+                    
                 </div>
                 </div>
         
@@ -342,6 +369,7 @@ hr.rounded {
                 
                 <div class="form-floating">
                 <select class="form-select" id="sel1" name="sellist">
+                  <option selected disabled hidden>' . $_SESSION["user"]["difficulty"] . '
                   <option>Easy</option>
                   <option>Medium</option>
                   <option>Hard</option>
@@ -351,7 +379,7 @@ hr.rounded {
 
                 <br>
 
-                <input type="submit" class="submit" name="submit"><br>
+                <input type="submit" class="submit" name="changeProfile" value="CHANGE"><br>
 
                 </form>
                 </div>
@@ -375,9 +403,30 @@ hr.rounded {
           echo '<div class="col py-3">
                 <div class="container text-center mt-3">
                 <h2 class="h2 text-light">PROFILE</h2>
-                <h3 class="mt-5">Username</h3>
-                <img src="images/avatar.png" alt="avatar" style="height:50%; width: 50%;" class="img-fluid rounded-circle">
-                </div>
+                <h3 class="mt-5">' . $_SESSION["user"]["userName"] . '</h3>
+                <img src="images/avatar2.png" alt="avatar" style="height:25%; width: 25%;" class="img-fluid rounded-circle">
+                <h4 class="mt-5">' . $_SESSION["user"]["fullName"] . '</h4>
+                <table class="table table-dark table-hover mt-3">
+                <tbody>
+                  <tr>
+                    <td>High Score: </td>
+                    <td>' . $_SESSION["user"]["highscore"] . '</td>
+                  </tr>
+                  <tr>
+                    <td>Total Answered Questions: </td>
+                    <td>' . $_SESSION["user"]["totalAnswered"] . '</td>
+                  </tr>
+                  <tr>
+                    <td>Total Correct Answers:</td>
+                    <td>' . $_SESSION["user"]["totalCorrect"] . '</td>
+                  </tr>
+                  <tr>
+                    <td>Total Potions:</td>
+                    <td>' . $_SESSION["user"]["totalPotions"] . '</td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
             </div>
             <div class="col py-3">
 

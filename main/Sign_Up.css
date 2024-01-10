@@ -17,11 +17,11 @@ body {background-image:url(https://e0.pxfuel.com/wallpapers/378/851/desktop-wall
     background-attachment: fixed;
     background-size: 100% 100%;
     font-family: "Quicksand";
+    color:white;
     }
 
 
 
-a:hover {color: palevioletred; background-color: pink;}
 
 .LOGO {
     display: block;
@@ -330,6 +330,7 @@ color:palevioletred;
         color: palevioletred; background-color: pink;
     }
     
+
     h5
     {
       color:white; 
