@@ -15,24 +15,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
     if ($_POST["category"] == "easy")
     {
-        $sql = "INSERT INTO `easy`( `easy_word`, `easy_c1`, `easy_c2`, 
-        `easy_c3`, `easy_c4`, `easy_correct`, `easy_meaning`, `easy_example`) VALUES ('" . $_POST['word'] . "' , '" . $_POST['c1'] . 
-        "' , '" . $_POST['c2'] . "' , '" . $_POST['c3'] . "' , '" . $_POST['c4'] .  "' , '" . $_POST['correct'] . 
-        "' , '" . $_POST['meaning'] . "' , '" . $_POST['example'] . "')";
+        $sql = 'INSERT INTO `easy`( `easy_word`, `easy_c1`, `easy_c2`, 
+        `easy_c3`, `easy_c4`, `easy_correct`, `easy_meaning`, `easy_example`) VALUES ("' . $_POST['word'] . '" , "' . $_POST['c1'] . 
+        '" , "' . $_POST['c2'] . '" , "' . $_POST['c3'] . '" , "' . $_POST['c4'] .  '" , "' . $_POST['correct'] . 
+        '" , "' . $_POST['meaning'] . '" , "' . $_POST['example'] . '")';
     }
     else if ($_POST["category"] == "medium")
     {
-        $sql = "INSERT INTO `medium`(`medium_id`, `medium_word`, `medium_c1`, `medium_c2`, 
-        `medium_c3`, `medium_c4`, `medium_correct`, `medium_meaning`, `medium_example`) VALUES ('','" . $_POST['word'] . "' , '" . $_POST['c1'] . 
-        "' , '" . $_POST['c2'] . "' , '" . $_POST['c3'] . "' , '" . $_POST['c4'] . "' , '" . $_POST['correct'] . 
-        "' , '" . $_POST['meaning'] . "' , '" . $_POST['example'] . "')";
+        $sql = 'INSERT INTO `medium`( `medium_word`, `medium_c1`, `medium_c2`, 
+        `medium_c3`, `medium_c4`, `medium_correct`, `medium_meaning`, `medium_example`) VALUES ("' . $_POST['word'] . '" , "' . $_POST['c1'] . 
+        '" , "' . $_POST['c2'] . '" , "' . $_POST['c3'] . '" , "' . $_POST['c4'] .  '" , "' . $_POST['correct'] . 
+        '" , "' . $_POST['meaning'] . '" , "' . $_POST['example'] . '")';
     }
     else if ($_POST["category"] == "hard")
     {
-        $sql = "INSERT INTO `hard`(`hard_id`, `hard_word`, `hard_c1`, `hard_c2`, 
-        `hard_c3`, `hard_c4`, `hard_correct`, `hard_meaning` , `hard_example`) VALUES ('','" . $_POST['word'] . "' , '" . $_POST['c1'] . 
-        "' , '" . $_POST['c2'] . "' , '" . $_POST['c3'] . "' , '" . $_POST['c4'] .  "' , '" . $_POST['correct'] . 
-        "' , '" . $_POST['meaning'] . "' , '" . $_POST['example'] . "')";
+        $sql = 'INSERT INTO `hard`( `hard_word`, `hard_c1`, `hard_c2`, 
+        `hard_c3`, `hard_c4`, `hard_correct`, `hard_meaning`, `hard_example`) VALUES ("' . $_POST['word'] . '" , "' . $_POST['c1'] . 
+        '" , "' . $_POST['c2'] . '" , "' . $_POST['c3'] . '" , "' . $_POST['c4'] .  '" , "' . $_POST['correct'] . 
+        '" , "' . $_POST['meaning'] . '" , "' . $_POST['example'] . '")';
     }
     
     $result = mysqli_query($conn, $sql);
@@ -53,8 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
 <select name="category">
     <option value="easy">easy</option>
-    <option value="medium">medium</option>
-    <option value="hard">hard</option>
+    <option value="medium" >medium</option>
+    <option value="hard" selected>hard</option>
 </select>
 <br>
 <input type = "text" name = "word" placeholder = "word"> <br>

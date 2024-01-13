@@ -37,7 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     'totalPotions' => $row['totalPotions'],
                     'highscore' => $row['highscore'],
                     'totalAnswered' => $row['totalAnswered'],
-                    'totalCorrect' => $row['totalCorrect']
+                    'totalCorrect' => $row['totalCorrect'],
+                    'x2' => $row['x2'],
+                    'extraLife' => $row['extraLife'],
+                    'removeOptions' => $row['removeOptions']
                 ];
                 
                 header("Location: userHomePage.php");

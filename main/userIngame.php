@@ -8,14 +8,18 @@ $gameOver = False;
 $correct = False;
 $wrong = False;
 
+$newHighscore = "";
+
 if (isset($_POST["tryAgain"]))
 {
   $_SESSION["score"] = -1;
+  unset($_SESSION["potion"]);
   header("Location: userIngame.php");
 }
 else if (isset($_POST["return"]))
 {
   unset($_SESSION["score"]);
+  unset($_SESSION["potion"]);
   unset($_SESSION["lives"]);
   header("Location: userHomePage.php");
 }
@@ -23,42 +27,221 @@ else if (isset($_POST["return"]))
 
 if (!($_SERVER["REQUEST_METHOD"] == "POST"))
 {
-  $_SESSION["score"] = 0;
-  
-  $sql = "SELECT * FROM easy";
-  $result = mysqli_query($conn, $sql);
-
-  if (mysqli_num_rows($result) > 0) {
-  $idx = 0;
-  while($row = $result -> fetch_assoc()) 
+  if ($_SESSION["user"]["difficulty"] == "Easy")
   {
-      $_SESSION["easy_id"][$idx] = $row["easy_id"];
-      $_SESSION["easy_word"][$idx] = $row["easy_word"];
-      $_SESSION["easy_c1"][$idx] = $row["easy_c1"];
-      $_SESSION["easy_c2"][$idx] = $row["easy_c2"];
-      $_SESSION["easy_c3"][$idx] = $row["easy_c3"];
-      $_SESSION["easy_c4"][$idx] = $row["easy_c4"];
-      $_SESSION["easy_correct"][$idx] = $row["easy_correct"];
-      $_SESSION["easy_meaning"][$idx] = $row["easy_meaning"];
-      $_SESSION["easy_example"][$idx] = $row["easy_example"];
-      $idx++;
+      $_SESSION["score"] = 0;
+    
+      $sql = "SELECT * FROM easy";
+      $result = mysqli_query($conn, $sql);
+    
+      if (mysqli_num_rows($result) > 0) {
+      $idx = 0;
+      while($row = $result -> fetch_assoc()) 
+      {
+          $_SESSION["id"][$idx] = $row["easy_id"];
+          $_SESSION["word"][$idx] = $row["easy_word"];
+          $_SESSION["c1"][$idx] = $row["easy_c1"];
+          $_SESSION["c2"][$idx] = $row["easy_c2"];
+          $_SESSION["c3"][$idx] = $row["easy_c3"];
+          $_SESSION["c4"][$idx] = $row["easy_c4"];
+          $_SESSION["correct"][$idx] = $row["easy_correct"];
+          $_SESSION["meaning"][$idx] = $row["easy_meaning"];
+          $_SESSION["example"][$idx] = $row["easy_example"];
+          $_SESSION["correct_word"][$idx] = $row["easy_correct_word"];
+          $idx++;
+      }
+    }
+
+      $sql = "SELECT * FROM medium ORDER BY RAND() LIMIT 10";
+      $result = mysqli_query($conn, $sql);
+    
+      if (mysqli_num_rows($result) > 0) {
+      while($row = $result -> fetch_assoc()) 
+      {
+          $_SESSION["id"][$idx] = $row["medium_id"];
+          $_SESSION["word"][$idx] = $row["medium_word"];
+          $_SESSION["c1"][$idx] = $row["medium_c1"];
+          $_SESSION["c2"][$idx] = $row["medium_c2"];
+          $_SESSION["c3"][$idx] = $row["medium_c3"];
+          $_SESSION["c4"][$idx] = $row["medium_c4"];
+          $_SESSION["correct"][$idx] = $row["medium_correct"];
+          $_SESSION["meaning"][$idx] = $row["medium_meaning"];
+          $_SESSION["example"][$idx] = $row["medium_example"];
+          $_SESSION["correct_word"][$idx] = $row["medium_correct_word"];
+          $idx++;
+      }
+    }
+
+    $sql = "SELECT * FROM hard ORDER BY RAND() LIMIT 5";
+      $result = mysqli_query($conn, $sql);
+    
+      if (mysqli_num_rows($result) > 0) {
+      while($row = $result -> fetch_assoc()) 
+      {
+          $_SESSION["id"][$idx] = $row["hard_id"];
+          $_SESSION["word"][$idx] = $row["hard_word"];
+          $_SESSION["c1"][$idx] = $row["hard_c1"];
+          $_SESSION["c2"][$idx] = $row["hard_c2"];
+          $_SESSION["c3"][$idx] = $row["hard_c3"];
+          $_SESSION["c4"][$idx] = $row["hard_c4"];
+          $_SESSION["correct"][$idx] = $row["hard_correct"];
+          $_SESSION["meaning"][$idx] = $row["hard_meaning"];
+          $_SESSION["example"][$idx] = $row["hard_example"];
+          $_SESSION["correct_word"][$idx] = $row["hard_correct_word"];
+          $idx++;
+      }
+    }
+      
+
+  }
+  else if ($_SESSION["user"]["difficulty"] == "Medium")
+  {
+    $_SESSION["score"] = 0;
+    
+      $sql = "SELECT * FROM medium";
+      $result = mysqli_query($conn, $sql);
+    
+      if (mysqli_num_rows($result) > 0) {
+      $idx = 0;
+      while($row = $result -> fetch_assoc()) 
+      {
+          $_SESSION["id"][$idx] = $row["medium_id"];
+          $_SESSION["word"][$idx] = $row["medium_word"];
+          $_SESSION["c1"][$idx] = $row["medium_c1"];
+          $_SESSION["c2"][$idx] = $row["medium_c2"];
+          $_SESSION["c3"][$idx] = $row["medium_c3"];
+          $_SESSION["c4"][$idx] = $row["medium_c4"];
+          $_SESSION["correct"][$idx] = $row["medium_correct"];
+          $_SESSION["meaning"][$idx] = $row["medium_meaning"];
+          $_SESSION["example"][$idx] = $row["medium_example"];
+          $_SESSION["correct_word"][$idx] = $row["medium_correct_word"];
+          $idx++;
+      }
+    }
+
+    $sql = "SELECT * FROM easy ORDER BY RAND() LIMIT 10";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+      $idx = 0;
+      while($row = $result -> fetch_assoc()) 
+      {
+          $_SESSION["id"][$idx] = $row["easy_id"];
+          $_SESSION["word"][$idx] = $row["easy_word"];
+          $_SESSION["c1"][$idx] = $row["easy_c1"];
+          $_SESSION["c2"][$idx] = $row["easy_c2"];
+          $_SESSION["c3"][$idx] = $row["easy_c3"];
+          $_SESSION["c4"][$idx] = $row["easy_c4"];
+          $_SESSION["correct"][$idx] = $row["easy_correct"];
+          $_SESSION["meaning"][$idx] = $row["easy_meaning"];
+          $_SESSION["example"][$idx] = $row["easy_example"];
+          $_SESSION["correct_word"][$idx] = $row["easy_correct_word"];
+          $idx++;
+      }
+    }
+
+    $sql = "SELECT * FROM hard ORDER BY RAND() LIMIT 5";
+      $result = mysqli_query($conn, $sql);
+    
+      if (mysqli_num_rows($result) > 0) {
+      $idx = 0;
+      while($row = $result -> fetch_assoc()) 
+      {
+          $_SESSION["id"][$idx] = $row["hard_id"];
+          $_SESSION["word"][$idx] = $row["hard_word"];
+          $_SESSION["c1"][$idx] = $row["hard_c1"];
+          $_SESSION["c2"][$idx] = $row["hard_c2"];
+          $_SESSION["c3"][$idx] = $row["hard_c3"];
+          $_SESSION["c4"][$idx] = $row["hard_c4"];
+          $_SESSION["correct"][$idx] = $row["hard_correct"];
+          $_SESSION["meaning"][$idx] = $row["hard_meaning"];
+          $_SESSION["example"][$idx] = $row["hard_example"];
+          $_SESSION["correct_word"][$idx] = $row["hard_correct_word"];
+          $idx++;
+      }
+    }
+  }
+  else if ($_SESSION["user"]["difficulty"] == "Hard")
+  {
+    $_SESSION["score"] = 0;
+    
+      $sql = "SELECT * FROM hard";
+      $result = mysqli_query($conn, $sql);
+    
+      if (mysqli_num_rows($result) > 0) {
+      $idx = 0;
+      while($row = $result -> fetch_assoc()) 
+      {
+          $_SESSION["id"][$idx] = $row["hard_id"];
+          $_SESSION["word"][$idx] = $row["hard_word"];
+          $_SESSION["c1"][$idx] = $row["hard_c1"];
+          $_SESSION["c2"][$idx] = $row["hard_c2"];
+          $_SESSION["c3"][$idx] = $row["hard_c3"];
+          $_SESSION["c4"][$idx] = $row["hard_c4"];
+          $_SESSION["correct"][$idx] = $row["hard_correct"];
+          $_SESSION["meaning"][$idx] = $row["hard_meaning"];
+          $_SESSION["example"][$idx] = $row["hard_example"];
+          $_SESSION["correct_word"][$idx] = $row["hard_correct_word"];
+          $idx++;
+      }
+    }
+  
+
+  $sql = "SELECT * FROM medium ORDER BY RAND() LIMIT 10";
+      $result = mysqli_query($conn, $sql);
+    
+      if (mysqli_num_rows($result) > 0) {
+      $idx = 0;
+      while($row = $result -> fetch_assoc()) 
+      {
+          $_SESSION["id"][$idx] = $row["medium_id"];
+          $_SESSION["word"][$idx] = $row["medium_word"];
+          $_SESSION["c1"][$idx] = $row["medium_c1"];
+          $_SESSION["c2"][$idx] = $row["medium_c2"];
+          $_SESSION["c3"][$idx] = $row["medium_c3"];
+          $_SESSION["c4"][$idx] = $row["medium_c4"];
+          $_SESSION["correct"][$idx] = $row["medium_correct"];
+          $_SESSION["meaning"][$idx] = $row["medium_meaning"];
+          $_SESSION["example"][$idx] = $row["medium_example"];
+          $_SESSION["correct_word"][$idx] = $row["medium_correct_word"];
+          $idx++;
+      }
+    }
+
+  $sql = "SELECT * FROM easy ORDER BY RAND() LIMIT 5";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+      $idx = 0;
+      while($row = $result -> fetch_assoc()) 
+      {
+          $_SESSION["id"][$idx] = $row["easy_id"];
+          $_SESSION["word"][$idx] = $row["easy_word"];
+          $_SESSION["c1"][$idx] = $row["easy_c1"];
+          $_SESSION["c2"][$idx] = $row["easy_c2"];
+          $_SESSION["c3"][$idx] = $row["easy_c3"];
+          $_SESSION["c4"][$idx] = $row["easy_c4"];
+          $_SESSION["correct"][$idx] = $row["easy_correct"];
+          $_SESSION["meaning"][$idx] = $row["easy_meaning"];
+          $_SESSION["example"][$idx] = $row["easy_example"];
+          $_SESSION["correct_word"][$idx] = $row["easy_correct_word"];
+          $idx++;
+      }
+    }
   }
 }
 
 
-
-
-
-
-}
-
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
+  $_SESSION["questions"]++;
 
-  if ($_POST["choice"] == $_SESSION["easy_correct"][$_POST["randomWord"]])
+  if ($_POST["choice"] == $_SESSION["correct"][$_POST["randomWord"]])
   {
     $_SESSION["score"]++;
     $correct = True;
+    if (($_SESSION["score"] % 5) == 0 && !($_SESSION["score"] == 0) )
+    {
+      $_SESSION["potion"]++;
+    }
   }
   else
   {
@@ -66,34 +249,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $wrong = True;
     if ($_SESSION["lives"] == 0)
     {
+
+      if ($_SESSION["score"] > $_SESSION["user"]["highscore"])
+      {
+        $_SESSION["user"]["highscore"] = $_SESSION["score"];
+
+        $sql = 'UPDATE users SET highscore = "' . $_SESSION["user"]["highscore"]. '" WHERE user_id = ' 
+        . $_SESSION["user"]["user_id"];
+        $result = mysqli_query($conn, $sql);
+
+        $newHighscore = "New Highscore!";
+
+      }
+
+      $_SESSION["user"]["potions"] += $_SESSION["potion"];
+      $_SESSION["user"]["totalPotions"] += $_SESSION["potion"];
+      $_SESSION["user"]["totalAnswered"] += $_SESSION["questions"];
+      $_SESSION["user"]["totalCorrect"] += $_SESSION["score"];
+
+      $sql = 'UPDATE users SET potions = ' . $_SESSION["user"]["potions"] . ',
+      highscore = ' . $_SESSION["user"]["potions"] . ', totalPotions = ' . $_SESSION["user"]["totalPotions"] . '
+      , totalCorrect = ' . $_SESSION["user"]["totalCorrect"] . ' , totalAnswered = ' . $_SESSION["user"]["totalAnswered"] . '
+      WHERE user_id = ' . $_SESSION["user"]["user_id"];
+      $result = mysqli_query($conn, $sql);
+      
       $gameOver = True;
     }
       
   }
 
-  $c = "easy_" . $_SESSION["easy_correct"][$_POST["randomWord"]];
 
-  $correctWord = $_SESSION[$c][$_POST["randomWord"]];
+  $correctWord = $_SESSION["correct_word"][$_POST["randomWord"]];
 
-  unset($_SESSION["easy_id"][$_POST["randomWord"]]);
-  unset($_SESSION["easy_word"][$_POST["randomWord"]]);
-  unset($_SESSION["easy_c1"][$_POST["randomWord"]]);
-  unset($_SESSION["easy_c2"][$_POST["randomWord"]]);
-  unset($_SESSION["easy_c3"][$_POST["randomWord"]]);
-  unset($_SESSION["easy_c4"][$_POST["randomWord"]]);
-  unset($_SESSION["easy_correct"][$_POST["randomWord"]]);
-  unset($_SESSION["easy_meaning"][$_POST["randomWord"]]);
-  unset($_SESSION["easy_example"][$_POST["randomWord"]]);
+  unset($_SESSION["id"][$_POST["randomWord"]]);
+  unset($_SESSION["word"][$_POST["randomWord"]]);
+  unset($_SESSION["c1"][$_POST["randomWord"]]);
+  unset($_SESSION["c2"][$_POST["randomWord"]]);
+  unset($_SESSION["c3"][$_POST["randomWord"]]);
+  unset($_SESSION["c4"][$_POST["randomWord"]]);
+  unset($_SESSION["correct"][$_POST["randomWord"]]);
+  unset($_SESSION["meaning"][$_POST["randomWord"]]);
+  unset($_SESSION["example"][$_POST["randomWord"]]);
+  unset($_SESSION["correct_word"][$_POST["randomWord"]]);
 
-  $_SESSION["easy_id"] = array_values($_SESSION["easy_id"]);
-  $_SESSION["easy_word"] = array_values($_SESSION["easy_word"]);
-  $_SESSION["easy_c1"] = array_values($_SESSION["easy_c1"]);
-  $_SESSION["easy_c2"] = array_values($_SESSION["easy_c2"]);
-  $_SESSION["easy_c3"] = array_values($_SESSION["easy_c3"]);
-  $_SESSION["easy_c4"] = array_values($_SESSION["easy_c4"]);
-  $_SESSION["easy_correct"] = array_values($_SESSION["easy_correct"]);
-  $_SESSION["easy_meaning"] = array_values($_SESSION["easy_meaning"]);
-  $_SESSION["easy_example"] = array_values($_SESSION["easy_example"]);
+  $_SESSION["id"] = array_values($_SESSION["id"]);
+  $_SESSION["word"] = array_values($_SESSION["word"]);
+  $_SESSION["c1"] = array_values($_SESSION["c1"]);
+  $_SESSION["c2"] = array_values($_SESSION["c2"]);
+  $_SESSION["c3"] = array_values($_SESSION["c3"]);
+  $_SESSION["c4"] = array_values($_SESSION["c4"]);
+  $_SESSION["correct"] = array_values($_SESSION["correct"]);
+  $_SESSION["meaning"] = array_values($_SESSION["meaning"]);
+  $_SESSION["example"] = array_values($_SESSION["example"]);
+  $_SESSION["correct_word"] = array_values($_SESSION["correct_word"]);
 
 
    
@@ -110,8 +318,18 @@ if (empty($_SESSION["lives"]))
   $_SESSION["lives"] = 3;
 }
 
+if (empty($_SESSION["potion"]))
+{
+  $_SESSION["potion"] = 0;
+}
 
-$randomWord = rand(0, count($_SESSION["easy_id"]) - 1);
+if (empty($_SESSION["questions"]))
+{
+  $_SESSION["questions"] = 0;
+}
+
+
+$randomWord = rand(0, count($_SESSION["id"]) - 1);
 
 ?>
 
@@ -364,10 +582,10 @@ echo '<nav class="navbar sticky-top" style="background-color:#8000ff;">
 echo "<div class='container-fluid mt-3 '>";
 
   echo "<div class='mt-5'>";
-  echo "<h2 class='text-center' style='color:white;'>" . $_SESSION["easy_word"][$randomWord] . "</h2>";
+  echo "<h2 class='text-center' style='color:white;'>" . $_SESSION["word"][$randomWord] . "</h2>";
   echo "</div>";
-  echo "<h5 class='text-center' > - " . $_SESSION["easy_meaning"][$randomWord] . "</h5>";
-  echo "<h6 class='text-center' >" . $_SESSION["easy_example"][$randomWord] . "</h6>";
+  echo "<h5 class='text-center' > - " . $_SESSION["meaning"][$randomWord] . "</h5>";
+  echo "<h6 class='text-center' >\"" . $_SESSION["example"][$randomWord] . "\"</h6>";
   echo "<hr class='rounded mt-5'>";
 
   echo "<div class='mt-5'>";
@@ -376,12 +594,12 @@ echo "<div class='container-fluid mt-3 '>";
   echo "<div class='row'>";
     echo "<div class='col-md mt-1'>";
     echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c1' id='choice1' autocomplete='off'>";
-    echo "<label class='button-19' role='button' id = 'label1' for='choice1'>" . $_SESSION["easy_c1"][$randomWord] . "</label>";
+    echo "<label class='button-19' role='button' id = 'label1' for='choice1'>" . $_SESSION["c1"][$randomWord] . "</label>";
     echo "</div>";
 
     echo "<div class='col-md mt-1'>";
     echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c2' id='choice2' autocomplete='off'>";
-    echo "<label class='button-19' role='button' id = 'label2' for='choice2'>" . $_SESSION["easy_c2"][$randomWord] . "</label>";
+    echo "<label class='button-19' role='button' id = 'label2' for='choice2'>" . $_SESSION["c2"][$randomWord] . "</label>";
     echo "</div>";
 
     echo "</div>";
@@ -390,12 +608,12 @@ echo "<div class='container-fluid mt-3 '>";
 
     echo "<div class='col-md mt-1'>";
     echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c3' id='choice3' autocomplete='off'>";
-    echo "<label class='button-19' role='button' id = 'label3' for='choice3'>" . $_SESSION["easy_c3"][$randomWord] . "</label>";
+    echo "<label class='button-19' role='button' id = 'label3' for='choice3'>" . $_SESSION["c3"][$randomWord] . "</label>";
     echo "</div>";
     
     echo "<div class='col-md mt-1'>";
     echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c4' id='choice4' autocomplete='off'>";
-    echo "<label class='button-19' role='button' id = 'label4' for='choice4'>" . $_SESSION["easy_c4"][$randomWord] . "</label>";
+    echo "<label class='button-19' role='button' id = 'label4' for='choice4'>" . $_SESSION["c4"][$randomWord] . "</label>";
     echo "</div>";
 
     echo "</div>";
@@ -421,7 +639,9 @@ else
 {
   echo "<div class='d-flex flex-column min-vh-100 justify-content-center align-items-center'>";
   echo "<h2 class='h2 text-center text-light'> Game over</h2>";
+  echo "<h3 class='h3 text-center text-light'> " . $newHighscore . "</h3>" ;
   echo "<div class='text-center'> <p style='color:white'><img style='width:10%; height:15%;' src='images/star.gif'>" . $_SESSION["score"] . "</p></div>";
+  echo '<h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">' . $_SESSION["potion"] . '</h3>';
   echo "<form action = '" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST' class='text-center'>";
   echo "<input type='submit' name='tryAgain' value='Try Again' id='submit' class='submit' role='button'><br>";
   echo "<input type='submit' name='return' value='Return to Main Menu' id='submit' class='submit mt-3' role='button'>";

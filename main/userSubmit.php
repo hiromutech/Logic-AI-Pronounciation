@@ -33,7 +33,6 @@ if (isset($_POST['OK']))
                 'totalAnswered' => $row['totalAnswered'],
                 'totalCorrect' => $row['totalCorrect']
             ];
-            
         }
 
         foreach($_SESSION as $key => $val)
@@ -42,7 +41,7 @@ if (isset($_POST['OK']))
             if ($key !== 'user')
             {
 
-            unset($_SESSION[$key]);
+                unset($_SESSION[$key]);
 
             }
 

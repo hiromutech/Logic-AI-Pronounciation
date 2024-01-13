@@ -1,5 +1,7 @@
 <?php
 
+require 'connect.php';
+
 session_start();
 
 // Start Game
@@ -44,6 +46,95 @@ else if (isset($_POST["signOut"]))
   header("Location: userLoginTemp.php");
 }
 
+//Settings
+$usernameErr = "";
+$usernameSuccess = "";
+if (isset($_POST["changeUsername"]))
+{
+  $page = "settings";
+  if (empty($_POST["newUsername"]))
+  {
+    $usernameErr = "Field is empty";
+  }
+  else if ($_POST["newUsername"] == $_SESSION["user"]["userName"])
+  {
+    $usernameErr = "Input is current username";
+  }
+  else
+  {
+    $sql = 'SELECT * FROM users WHERE userName = "' . $_POST["newUsername"]  . '"';
+    $result = mysqli_query($conn, $sql);
+      
+    if (mysqli_num_rows($result) > 0) {
+      $usernameErr = "Username already exists";
+    }
+    else
+    {
+      $sql = 'UPDATE users SET userName = "' . $_POST["newUsername"] . '" WHERE user_id = ' 
+      . $_SESSION["user"]["user_id"];
+      $result = mysqli_query($conn, $sql);
+
+      $_SESSION["user"]["userName"] = $_POST["newUsername"];
+
+      $usernameSuccess = "Username Succesfully Changed";
+    }
+  }
+}
+
+$passwordErr = "";
+$passwordSuccess = "";
+if (isset($_POST["changePassword"]))
+{
+  $page = "settings";
+  if (empty($_POST["newPassword"]) || empty($_POST["newPassword1"]))
+  {
+    $passwordErr = "Complete all fields";
+  }
+  else if ($_POST["newPassword"] == $_SESSION["user"]["password"])
+  {
+    $passwordErr = "Input is current password";
+  }
+  else if (!($_POST["newPassword"] == $_POST["newPassword1"]))
+  {
+    $passwordErr = "Password is not the same";
+  }
+  else if (strlen($_POST["newPassword"]) < 8)
+  {
+    $passwordErr = "Please create a stronger password (Atleast 8 Characters)";
+  }
+  else
+  {
+    $sql = 'UPDATE users SET password = "' . $_POST["newPassword"] . '" WHERE user_id = ' 
+    . $_SESSION["user"]["user_id"];
+    $result = mysqli_query($conn, $sql);
+
+    $passwordSuccess = "Password Succesfully Changed";
+  }
+
+}
+
+$difficultyErr = "";
+$difficultySuccess = "";
+if (isset($_POST["changeDifficulty"]))
+{
+  $page = "settings";
+
+  if (empty($_POST["newDifficulty"]))
+  {
+    $difficultyErr = "Input is current difficulty";
+  }
+  else
+  {
+    $sql = 'UPDATE users SET q5 = "' . $_POST["newDifficulty"] . '" WHERE user_id = ' 
+    . $_SESSION["user"]["user_id"];
+    $result = mysqli_query($conn, $sql);
+    $difficultySuccess = "Difficulty Succesfully Changed";
+
+    $_SESSION["user"]["difficulty"] = $_POST["newDifficulty"];
+  }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +163,6 @@ else if (isset($_POST["signOut"]))
 
 
 
-
 body {background-color: #111F23;
 background-repeat: no-repeat;
 background-attachment: fixed;
@@ -81,7 +171,15 @@ font-family: "Quicksand";
 color: white}
 
 
+.error
+{
+  color:red;
+}
 
+.success
+{
+  color:green;
+}
 
 
 
@@ -212,6 +310,33 @@ hr.rounded {
 
 <body>
 
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Change Avatar</h4>
+        <button type="button" class="btn-close float-end" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid">
     <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
@@ -281,7 +406,7 @@ hr.rounded {
             </div>
             <div class="col py-3">
 
-                <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">3 </h3>
+            <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">' . $_SESSION["user"]["potions"] . '</h3>
 
                 <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
                 <div class="card-header">Header</div>
@@ -319,7 +444,7 @@ hr.rounded {
             </div>
             <div class="col py-3">
 
-                <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">3 </h3>
+            <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">' . $_SESSION["user"]["potions"] . '</h3>
 
                 <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
                 <div class="card-header">Header</div>
@@ -334,14 +459,69 @@ hr.rounded {
         }
         else if ($page == "shop")
         {
-          echo '<div class="col py-3">
-                <div class="container text-center mt-3">
-                <h2 class="h2 text-light">SHOP</h2>
-                </div>
+          echo '
+            <div class="col py-3">
+              <div class="container text-center mt-3">
+              <h2 class="h2 text-light">SHOP</h2>
+                <div class="card mb-3" style="max-width: 540px;">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="images/x2.png" class="img-fluid rounded-start" alt="...">
+                    </div>
+                      <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">Double Points</h5>
+                        <p class="card-text">Double the points until the first wrong answer</p>
+                        <p class="card-text"><small class="text-muted">Owned: ' . $_SESSION["user"]["x2"] . '</small></p>
+                        <form action="" method="POST">
+                        <input type="submit" class="submit" name="doublePts" value="Buy">
+                        </form>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card mb-3" style="max-width: 540px;">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="images/extraLife.gif" class="img-fluid rounded-start" alt="...">
+                    </div>
+                      <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">Extra Life</h5>
+                        <p class="card-text">+1 Life</p>
+                        <p class="card-text"><small class="text-muted">Owned: ' . $_SESSION["user"]["extraLife"] . '</small></p>
+                        <form action="" method="POST">
+                        <input type="submit" class="submit" name="doublePts" value="Buy">
+                        </form>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card mb-3" style="max-width: 540px;">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="images/removeOptions.png" class="img-fluid rounded-start" alt="...">
+                    </div>
+                      <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">Eliminate Option</h5>
+                        <p class="card-text">Eliminate a wrong option</p>
+                        <p class="card-text"><small class="text-muted">Owned: ' . $_SESSION["user"]["removeOptions"] . '</small></p>
+                        <form action="" method="POST">
+                        <input type="submit" class="submit" name="doublePts" value="Buy">
+                        </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+              </div>
             </div>
             <div class="col py-3">
-
-                <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">3 </h3>
+            <div class="sticky-top">
+            <h3 class="text-center pt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">' . $_SESSION["user"]["potions"] . '</h3>
 
                 <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
                 <div class="card-header">Header</div>
@@ -350,6 +530,7 @@ hr.rounded {
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
                 </div>
                 </div>
+              </div>
         
             </div>';
         }
@@ -360,33 +541,45 @@ hr.rounded {
                 <h2 class="h2 text-light">SETTINGS</h2>
                 <h4> Change Account Info </h4>
                 <form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method = "post">
+                <p class="error">' . $usernameErr . '</p>
+                <p class="success">' . $usernameSuccess . '</p>
                 <label for="username">Username: </label>
-                <input type="text" class="form-control" name="username"><br>
+                <input type="text" class="form-control" name="newUsername"><br>
+                <input type="submit" class="submit" name="changeUsername" value="Change Username">
+                </form>
+                <form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" class="mt-5" method = "post">
+                <p class="error">' . $passwordErr . '</p>
+                <p class="success">' . $passwordSuccess . '</p>
                 <label for="password">Password: </label>
-                <input type="text" class="form-control" name="password"><br>
+                <input type="text" class="form-control" name="newPassword"><br>
                 <label for="password1">Confirm Password: </label>
-                <input type="text" class="form-control" name="password1"><br>
+                <input type="text" class="form-control" name="newPassword1"><br>
+                <input type="submit" class="submit" name="changePassword" value="Change Password">
+                </form>
                 
+                <form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" class="mt-5" method = "post">
                 <div class="form-floating">
-                <select class="form-select" id="sel1" name="sellist">
+                <p class="error">' . $difficultyErr . '</p>
+                <p class="success">' . $difficultySuccess . '</p>
+                <select class="form-select" id="sel1" name="newDifficulty">
                   <option selected disabled hidden>' . $_SESSION["user"]["difficulty"] . '
                   <option>Easy</option>
                   <option>Medium</option>
                   <option>Hard</option>
                 </select>
                 <label for="sel1" class="form-label">Difficulty:</label>
+                <input type="submit" class="submit mt-4" name="changeDifficulty" value="Change Difficulty">
                 </div>
+                </form>
 
                 <br>
 
-                <input type="submit" class="submit" name="changeProfile" value="CHANGE"><br>
-
-                </form>
                 </div>
             </div>
 
             <div class="col py-3">
-                <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">3 </h3>
+            <div class="sticky-top">
+            <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">' . $_SESSION["user"]["potions"] . '</h3>
 
                 <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
                 <div class="card-header">Header</div>
@@ -395,6 +588,7 @@ hr.rounded {
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
                 </div>
                 </div>
+            </div>
         
             </div>';
         }
@@ -404,7 +598,11 @@ hr.rounded {
                 <div class="container text-center mt-3">
                 <h2 class="h2 text-light">PROFILE</h2>
                 <h3 class="mt-5">' . $_SESSION["user"]["userName"] . '</h3>
-                <img src="images/avatar2.png" alt="avatar" style="height:25%; width: 25%;" class="img-fluid rounded-circle">
+                <img src="images/avatar2.png" alt="avatar" style="height:25%; width: 25%;" class="img-fluid rounded-circle"><br>
+                <button type="button" class="submit mt-3" data-bs-toggle="modal" data-bs-target="#myModal">
+                Change Avatar
+                </button>
+
                 <h4 class="mt-5">' . $_SESSION["user"]["fullName"] . '</h4>
                 <table class="table table-dark table-hover mt-3">
                 <tbody>
@@ -430,7 +628,7 @@ hr.rounded {
             </div>
             <div class="col py-3">
 
-                <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">3 </h3>
+                <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">' . $_SESSION["user"]["potions"] . '</h3>
 
                 <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
                 <div class="card-header">Header</div>
