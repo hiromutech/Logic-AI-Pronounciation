@@ -1,0 +1,85 @@
+body{
+    background-image: url(gamebg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.logow{
+    width: 10%;
+    height: 10%;
+    align-items: center;
+    position: relative;
+    top: -360px;
+    left: 850px;
+}
+.kid{
+    width: 23%;
+    height: 23%;
+    align-items: center;
+    position: relative;
+    top: 30px;
+    left: 520px;
+}
+.no{
+    width: 20%;
+    height: 20%;
+    align-items: center;
+    position: relative;
+    top: 90px;
+    left: 120px;
+}
+.h1{
+    font-family: sans-serif;
+    font-size: 50px;
+    text-align: center;
+    position: relative;
+    top: 10px;
+}
+.h2{
+    font-family: 'Gill Sans';
+    color: rgb(160, 13, 13);
+    font-size: 30px;
+    text-align: center;
+    position: relative;
+    top: -10px;
+}
+.zero{
+    font-family: 'Arial Narrow';
+    font-size: 60px;
+    position: relative;
+    top: 5px;
+    left: 120px;
+}
+.four{
+    font-family: 'Arial Narrow';
+    font-size: 60px;
+    position: relative;
+    top: -400px;
+    left: 1700px;
+}
+.nex{
+    border-radius: 30px;
+    background-color: rgb(192, 39, 172);
+    color: rgb(250, 249, 249);   
+    position: relative;
+    top: -20px;
+    left: 650px;
+    text-align: center;
+    text-decoration: none;
+    width: 30%;
+    font-size: 50px;
+    display: inline-block;
+}
+.kidd{
+    width: 10%;
+    height: 5%;
+    position: relative;
+    top: -200px;
+    left: 1550px;
+}
+.fier{
+    width: 10%;
+    height: 10%;
+    position: relative;
+    top: 150px;
+    left: -600px;
+}

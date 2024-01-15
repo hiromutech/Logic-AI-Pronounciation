@@ -1,0 +1,65 @@
+.thunder{
+    width: 100px;
+    height: 100px;
+    position: relative;
+    left: 1600px;
+    top: 1px;
+}
+.fayah{
+    width: 150px;
+    height: 80px;
+    position: relative;
+    top: -15px;
+}
+body{
+    background-image: url(levelbg.png);
+}
+a.btn{
+    text-decoration: none;
+    color: #ffc107;
+    border-radius: 50px;
+    font-size: 70px;
+    font-family: 'Times New Roman';
+}
+.one {
+    background-color: #424242;
+    position: relative;
+    top: -90px;
+    left: 500px;
+}
+.two {
+    background-color: #424242;
+    position: relative;
+    top: 10px;
+    left: 200px;
+}
+.three {
+    background-color: #424242;
+    position: relative;
+    top: 160px;
+    left: -100px;
+}
+.four {
+    background-color: #424242;
+    position: relative;
+    top: 300px;
+    left: 300px;
+}
+.five {
+    background-color: #424242;
+    position: relative;
+    top: 480px;
+    left: 490px;
+}
+.p{
+    color: rgb(8, 8, 8);
+    font-family: Impact;
+    border: stroke;
+    font-size: 150px;
+    height: 20px;
+    padding: 0px;
+    width: 100px;
+    position: relative;
+    top: -200px;
+    left: 150px;
+}
