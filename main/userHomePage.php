@@ -4,6 +4,7 @@ require 'connect.php';
 
 session_start();
 
+
 // Start Game
 if (isset($_POST["start"]))
 {
@@ -43,7 +44,7 @@ else if (isset($_POST["profile"]))
 else if (isset($_POST["signOut"]))
 {
   session_unset();
-  header("Location: userLoginTemp.php");
+  header("Location: userTitlePage.php");
 }
 
 //Settings
@@ -134,6 +135,113 @@ if (isset($_POST["changeDifficulty"]))
   }
 }
 
+
+// Change Avatar
+$avatarSuccess = "";
+if (isset($_POST["avatar"]))
+{
+  $page = "profile";
+  if ($_POST["avatar"] == "default")
+  {
+    $_SESSION["user"]["avatar"] = "images/default.png";
+
+    $sql = 'UPDATE users SET avatar = "images/default.png" WHERE user_id = ' 
+    . $_SESSION["user"]["user_id"];
+    $result = mysqli_query($conn, $sql);
+  }
+  else if ($_POST["avatar"] == "elfgirl")
+  {
+    $_SESSION["user"]["avatar"] = "images/elf girl.png";
+
+    $sql = 'UPDATE users SET avatar = "images/elf girl.png" WHERE user_id = ' 
+    . $_SESSION["user"]["user_id"];
+    $result = mysqli_query($conn, $sql);
+  }
+  else if ($_POST["avatar"] == "elfgirl2")
+  {
+    $_SESSION["user"]["avatar"] = "images/elf girl 2.png";
+
+    $sql = 'UPDATE users SET avatar = "images/elf girl 2.png" WHERE user_id = ' 
+    . $_SESSION["user"]["user_id"];
+    $result = mysqli_query($conn, $sql);
+  }
+  else if ($_POST["avatar"] == "dwarf")
+  {
+    $_SESSION["user"]["avatar"] = "images/dwarf.png";
+
+    $sql = 'UPDATE users SET avatar = "images/dwarf.png" WHERE user_id = ' 
+    . $_SESSION["user"]["user_id"];
+    $result = mysqli_query($conn, $sql);
+  }
+  else if ($_POST["avatar"] == "elf")
+  {
+    $_SESSION["user"]["avatar"] = "images/elf.png";
+
+    $sql = 'UPDATE users SET avatar = "images/elf.png" WHERE user_id = ' 
+    . $_SESSION["user"]["user_id"];
+    $result = mysqli_query($conn, $sql);
+  }
+  else if ($_POST["avatar"] == "wizard")
+  {
+    $_SESSION["user"]["avatar"] = "images/wizard.png";
+
+    $sql = 'UPDATE users SET avatar = "images/wizard.png" WHERE user_id = ' 
+    . $_SESSION["user"]["user_id"];
+    $result = mysqli_query($conn, $sql);
+  }
+  else if ($_POST["avatar"] == "wizard2")
+  {
+    $_SESSION["user"]["avatar"] = "images/wizard 2.png";
+
+    $sql = 'UPDATE users SET avatar = "images/wizard 2.png" WHERE user_id = ' 
+    . $_SESSION["user"]["user_id"];
+    $result = mysqli_query($conn, $sql);
+  }
+  else if ($_POST["avatar"] == "wizard3")
+  {
+    $_SESSION["user"]["avatar"] = "images/wizard 3.png";
+
+    $sql = 'UPDATE users SET avatar = "images/wizard 3.png" WHERE user_id = ' 
+    . $_SESSION["user"]["user_id"];
+    $result = mysqli_query($conn, $sql);
+  }
+  $avatarSuccess = "Avatar Successfully Changed";
+}
+
+// Shop 
+
+if (isset($_POST["buyX2"]))
+{
+  $page = "shop";
+
+  $_SESSION["user"]["x2"]++;
+
+  $sql = 'UPDATE users SET x2 = ' . $_SESSION["user"]["x2"] . ' WHERE user_id = ' 
+  . $_SESSION["user"]["user_id"];
+  $result = mysqli_query($conn, $sql);
+}
+
+if (isset($_POST["buyExtraLife"]))
+{
+  $page = "shop";
+
+  $_SESSION["user"]["extraLife"]++;
+
+  $sql = 'UPDATE users SET extraLife = ' . $_SESSION["user"]["extraLife"] . ' WHERE user_id = ' 
+  . $_SESSION["user"]["user_id"];
+  $result = mysqli_query($conn, $sql);
+}
+
+if (isset($_POST["buyRemoveOptions"]))
+{
+  $page = "shop";
+
+  $_SESSION["user"]["removeOptions"]++;
+
+  $sql = 'UPDATE users SET x2 = ' . $_SESSION["user"]["removeOptions"] . ' WHERE user_id = ' 
+  . $_SESSION["user"]["user_id"];
+  $result = mysqli_query($conn, $sql);
+}
 
 ?>
 
@@ -303,6 +411,12 @@ hr.rounded {
 	outline: inherit;
 }
 
+.pickAvatar
+{
+  border: 0;
+  background-color: transparent;
+}
+
 
 </style>
 
@@ -318,18 +432,60 @@ hr.rounded {
     <div class="modal-content">
 
       <!-- Modal Header -->
-      <div class="modal-header">
+      <div class="modal-header border-0" style="background-color: #4B4B4B; color:white;">
         <h4 class="modal-title">Change Avatar</h4>
         <button type="button" class="btn-close float-end" data-bs-dismiss="modal"></button>
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body">
-        
+      <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST">
+      <div class="modal-body border-0" style="background-color: #4B4B4B; color:white;">
+        <div class="row text-center">   
+          <div class="col w-100 h-100">
+            <button class="pickAvatar w-100 h-100" type="submit" name="avatar" value="default"><img class="w-100 h-100" src="images/default.png"></button>
+          </div>
+          <div class="col w-100 h-100">
+          <button class="pickAvatar w-100 h-100" type="submit" name="avatar" value="dwarf"><img class="w-100 h-100" src="images/dwarf.png"></button>
+          </div>
+          <div class="col w-100 h-100">
+          <button class="pickAvatar w-100 h-100" type="submit" name="avatar" value="elfgirl"><img class="w-100 h-100"  src="images/elf girl.png"></button>
+          </div>
+          <div class="col w-100 h-100">
+          <button class="pickAvatar w-100 h-100" type="submit" name="avatar" value="elfgirl2"><img class="w-100 h-100" src="images/elf girl 2.png"></button>
+          </div>
+          <div class="col w-100 h-100">
+          <button class="pickAvatar w-100 h-100" type="submit" name="avatar" value="elf"><img class="w-100 h-100" src="images/elf.png"></button>
+          </div>
+          <div class="col w-100 h-100">
+          <button class="pickAvatar w-100 h-100" type="submit" name="avatar" value="wizard"><img class="w-100 h-100" src="images/wizard.png"></button>
+          </div>
+        </div>
+        <div class="row text-center mt-3">
+          <div class="col w-100 h-100">
+          <button class="pickAvatar w-100 h-100" type="submit" name="avatar" value="wizard2"><img class="w-100 h-100" src="images/wizard 2.png"></button>
+          </div>
+          <div class="col w-100 h-100">
+          <button class="pickAvatar w-100 h-100" type="submit" name="avatar" value="wizard3"><img class="w-100 h-100" src="images/wizard 3.png"></button>
+          </div>
+          <div class="col w-100 h-100">
+            
+          </div>
+          <div class="col w-100 h-100">
+            
+          </div>
+          <div class="col w-100 h-100">
+            
+          </div>
+          <div class="col w-100 h-100">
+            
+          </div>
+        </div>
+
       </div>
+      </form>
 
       <!-- Modal footer -->
-      <div class="modal-footer">
+      <div class="modal-footer border-0" style="background-color: #4B4B4B; color:white;">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
       </div>
 
@@ -366,7 +522,7 @@ hr.rounded {
                 <hr>
                 <div class="dropdown pb-4">
                     <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="images/avatar.png" alt="hugenerd" style="height:20%; width:20%" class="rounded-circle">
+                        <img src="<?php echo $_SESSION["user"]["avatar"]; ?>" alt="hugenerd" style="height:20%; width:20%" class="rounded-circle">
                         <span class="d-none d-sm-inline mx-1"><?php echo $_SESSION["user"]["userName"]; ?> </span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
@@ -460,57 +616,60 @@ hr.rounded {
         else if ($page == "shop")
         {
           echo '
-            <div class="col py-3">
+            <div class="col py-3" >
               <div class="container text-center mt-3">
               <h2 class="h2 text-light">SHOP</h2>
-                <div class="card mb-3" style="max-width: 540px;">
+                <div class="card border-secondary mb-3" style="max-width: 540px;" >
                   <div class="row g-0">
-                    <div class="col-md-4">
+                    <div class="col-md-4" style="background-color:#111F23; color: white">
                       <img src="images/x2.png" class="img-fluid rounded-start" alt="...">
                     </div>
                       <div class="col-md-8">
-                      <div class="card-body">
+                      <div class="card-body" style="background-color:#111F23; color: white">
                         <h5 class="card-title">Double Points</h5>
                         <p class="card-text">Double the points until the first wrong answer</p>
-                        <p class="card-text"><small class="text-muted">Owned: ' . $_SESSION["user"]["x2"] . '</small></p>
-                        <form action="" method="POST">
-                        <input type="submit" class="submit" name="doublePts" value="Buy">
+                        <p class="card-text"><small>Owned: ' . $_SESSION["user"]["x2"] . '</small></p>
+                        <p class="card-text"><img src="images/potion.png" style="height:20px; width:20px"> 10</p>
+                        <form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="POST">
+                        <input type="submit" class="submit" name="buyX2" value="Buy">
                         </form>
                       </div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="card mb-3" style="max-width: 540px;">
+                  <div class="card border-secondary mb-3" style="max-width: 540px;">
                   <div class="row g-0">
-                    <div class="col-md-4">
+                    <div class="col-md-4" style="background-color:#111F23; color: white">
                       <img src="images/extraLife.gif" class="img-fluid rounded-start" alt="...">
                     </div>
                       <div class="col-md-8">
-                      <div class="card-body">
+                      <div class="card-body" style="background-color:#111F23; color: white">
                         <h5 class="card-title">Extra Life</h5>
                         <p class="card-text">+1 Life</p>
-                        <p class="card-text"><small class="text-muted">Owned: ' . $_SESSION["user"]["extraLife"] . '</small></p>
-                        <form action="" method="POST">
-                        <input type="submit" class="submit" name="doublePts" value="Buy">
+                        <p class="card-text"><small>Owned: ' . $_SESSION["user"]["extraLife"] . '</small></p>
+                        <p class="card-text"><img src="images/potion.png" style="height:20px; width:20px"> 10</p>
+                        <form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="POST">
+                        <input type="submit" class="submit" name="buyExtraLife" value="Buy">
                         </form>
                       </div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="card mb-3" style="max-width: 540px;">
+                  <div class="card border-secondary mb-3" style="max-width: 540px;">
                   <div class="row g-0">
-                    <div class="col-md-4">
+                    <div class="col-md-4" style="background-color:#111F23; color: white">
                       <img src="images/removeOptions.png" class="img-fluid rounded-start" alt="...">
                     </div>
                       <div class="col-md-8">
-                      <div class="card-body">
+                      <div class="card-body" style="background-color:#111F23; color: white">
                         <h5 class="card-title">Eliminate Option</h5>
                         <p class="card-text">Eliminate a wrong option</p>
-                        <p class="card-text"><small class="text-muted">Owned: ' . $_SESSION["user"]["removeOptions"] . '</small></p>
-                        <form action="" method="POST">
-                        <input type="submit" class="submit" name="doublePts" value="Buy">
+                        <p class="card-text"><small>Owned: ' . $_SESSION["user"]["removeOptions"] . '</small></p>
+                        <p class="card-text"><img src="images/potion.png" style="height:20px; width:20px"> 5</p>
+                        <form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="POST">
+                        <input type="submit" class="submit" name="buyRemoveOptions" value="Buy">
                         </form>
                         </div>
                       </div>
@@ -598,7 +757,8 @@ hr.rounded {
                 <div class="container text-center mt-3">
                 <h2 class="h2 text-light">PROFILE</h2>
                 <h3 class="mt-5">' . $_SESSION["user"]["userName"] . '</h3>
-                <img src="images/avatar2.png" alt="avatar" style="height:25%; width: 25%;" class="img-fluid rounded-circle"><br>
+                <p class="success">' . $avatarSuccess . '</p>
+                <img src="'. $_SESSION["user"]["avatar"] . '" alt="avatar" style="height:25%; width: 25%;" class="img-fluid rounded-circle"><br>
                 <button type="button" class="submit mt-3" data-bs-toggle="modal" data-bs-target="#myModal">
                 Change Avatar
                 </button>

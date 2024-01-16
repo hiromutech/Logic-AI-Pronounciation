@@ -9,11 +9,10 @@ $correct = False;
 $wrong = False;
 
 $newHighscore = "";
-
+$removeOptions = False;
+// Game Over Conditions
 if (isset($_POST["tryAgain"]))
 {
-  $_SESSION["score"] = -1;
-  unset($_SESSION["potion"]);
   header("Location: userIngame.php");
 }
 else if (isset($_POST["return"]))
@@ -21,16 +20,28 @@ else if (isset($_POST["return"]))
   unset($_SESSION["score"]);
   unset($_SESSION["potion"]);
   unset($_SESSION["lives"]);
+  unset($_SESSION["questions"]);
   header("Location: userHomePage.php");
 }
 
 
+
+// First start of the game
 if (!($_SERVER["REQUEST_METHOD"] == "POST"))
 {
+  $_SESSION["ropOn"] = False;
+  $_SESSION["score"] = 0;
+  $_SESSION["multiplier"] = 1;
+  $_SESSION["questions"] = 0;
+  $_SESSION["potion"] = 0;
+  $_SESSION["lives"] = 3;
+  $_SESSION["score"] = 0;
+
+
+  
+
   if ($_SESSION["user"]["difficulty"] == "Easy")
   {
-      $_SESSION["score"] = 0;
-    
       $sql = "SELECT * FROM easy";
       $result = mysqli_query($conn, $sql);
     
@@ -227,16 +238,67 @@ if (!($_SERVER["REQUEST_METHOD"] == "POST"))
       }
     }
   }
+
+  // Get a random question from the arrays
+  $randomWord = rand(0, count($_SESSION["id"]) - 1);
+  $_SESSION["randomWord"] = $randomWord;
 }
 
+// For every submit
+if (isset($_POST["powerup"]))
+{
+  if ($_POST["powerup"] == "x2")
+  {
 
-if ($_SERVER["REQUEST_METHOD"] == "POST")
+    if (!($_SESSION["multiplier"] == 2))
+    {
+      $_SESSION["multiplier"] = 2;
+    
+      $_SESSION["user"]["x2"]--;
+
+      $sql = 'UPDATE users SET x2 = ' . $_SESSION["user"]["x2"] . ' WHERE user_id = ' 
+      . $_SESSION["user"]["user_id"];
+      $result = mysqli_query($conn, $sql);
+    }
+    
+  }
+  else if ($_POST["powerup"] == "extraLife")
+  {
+ 
+    $_SESSION["lives"]++;
+
+    $_SESSION["user"]["extraLife"]--;
+
+    $sql = 'UPDATE users SET extraLife = ' . $_SESSION["user"]["extraLife"] . ' WHERE user_id = ' 
+    . $_SESSION["user"]["user_id"];
+    $result = mysqli_query($conn, $sql);
+ 
+
+  }
+  else if ($_POST["powerup"] == "removeOptions")
+  {
+
+      $removeOptions = True;
+      if (!($_SESSION["ropOn"]))
+      {
+        $_SESSION["user"]["removeOptions"]--;
+
+        $sql = 'UPDATE users SET x2 = ' . $_SESSION["user"]["removeOptions"] . ' WHERE user_id = ' 
+        . $_SESSION["user"]["user_id"];
+        $result = mysqli_query($conn, $sql); 
+      }  
+    
+  }
+  
+}
+else if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
   $_SESSION["questions"]++;
+  $_SESSION["ropOn"] = False;
 
   if ($_POST["choice"] == $_SESSION["correct"][$_POST["randomWord"]])
   {
-    $_SESSION["score"]++;
+    $_SESSION["score"] = $_SESSION["score"] + $_SESSION["multiplier"];
     $correct = True;
     if (($_SESSION["score"] % 5) == 0 && !($_SESSION["score"] == 0) )
     {
@@ -246,6 +308,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
   else
   {
     $_SESSION["lives"]--;
+    $_SESSION["multiplier"] = 1;
     $wrong = True;
     if ($_SESSION["lives"] == 0)
     {
@@ -278,9 +341,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
       
   }
 
-
+  // Get the correct word to show in corrections
   $correctWord = $_SESSION["correct_word"][$_POST["randomWord"]];
 
+  // Remove the answered question from the array
   unset($_SESSION["id"][$_POST["randomWord"]]);
   unset($_SESSION["word"][$_POST["randomWord"]]);
   unset($_SESSION["c1"][$_POST["randomWord"]]);
@@ -303,33 +367,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
   $_SESSION["example"] = array_values($_SESSION["example"]);
   $_SESSION["correct_word"] = array_values($_SESSION["correct_word"]);
 
+  // Get a random question from the arrays
+  $randomWord = rand(0, count($_SESSION["id"]) - 1);
+  $_SESSION["randomWord"] = $randomWord;
 
-   
 }
 
-if (empty($_SESSION["score"]))
+// Powerups check
+$noX2 = "";
+$noExtraLife = "";
+$noRemoveOptions = "";
+if ($_SESSION["user"]["x2"] <= 0)
 {
-  $_SESSION["score"] = 0;
+  $noX2 = "disabled";
 }
 
-
-if (empty($_SESSION["lives"]))
+if ($_SESSION["user"]["extraLife"] <= 0)
 {
-  $_SESSION["lives"] = 3;
+  $noExtraLife = "disabled";
 }
 
-if (empty($_SESSION["potion"]))
+if ($_SESSION["user"]["removeOptions"] <= 0)
 {
-  $_SESSION["potion"] = 0;
+  $noRemoveOptions = "disabled";
 }
-
-if (empty($_SESSION["questions"]))
-{
-  $_SESSION["questions"] = 0;
-}
-
-
-$randomWord = rand(0, count($_SESSION["id"]) - 1);
 
 ?>
 
@@ -464,6 +525,13 @@ font-family: "Quicksand";}
   filter: brightness(1.5);
 }
 
+.submit:disabled
+{
+  background-color: transparent;
+  border: 1px solid #8000ff;
+  box-shadow: 0 5px 0 #5900b3; 
+}
+
 h5
 {
   color:white; 
@@ -482,6 +550,15 @@ hr.rounded {
   border-radius: 5px;
 }
 
+.powerup{
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
 </style>
 
 </head>
@@ -503,8 +580,8 @@ echo '<div class="offcanvas show offcanvas-bottom h-auto" style="background-colo
   <div class="offcanvas-header">
     <h4 class="offcanvas-title" style="color:#FF464E;"><img style="height:50px; width: 50px;" src="images/cross.png"> Incorrect</h1>
   </div>
-  <div style="color:#FF464E" class="offcanvas-body">
-    <p style="color:#FF464E" >Correct Answer:</p>
+  <div style="color:white" class="offcanvas-body">
+    <p style="color:white" >Correct Answer:</p>
     <p>' . $correctWord . '</p> 
     <button style="background-color: #FF464E; box-shadow: 0 5px 0 #EA3741;"class="submit" data-bs-dismiss="offcanvas" type="button">GOT IT</button>
   </div>
@@ -578,14 +655,32 @@ echo '<nav class="navbar sticky-top" style="background-color:#8000ff;">
 
 
 
+// Powerups
+echo '
+<div class="container m-0">
+<form action = ' . htmlspecialchars($_SERVER["PHP_SELF"]) . ' method="POST">';
+echo '<button class ="submit w-10 h-10"
+';
+if ($_SESSION["multiplier"] == 2)
+{
+  echo ' style="filter: brightness(1.8);" ';
+}
 
+echo 'role = "button" type="submit" name="powerup" value="x2"' . $noX2 . ' data-bs-toggle="tooltip" title="Owned: ' . $_SESSION["user"]["x2"] . '"><img src="images/x2.png" style="width:30px;height:30px"></button>';
+echo '<button class ="submit w-10 h-10" role = "button" type="submit" name="powerup" value="extraLife"' . $noExtraLife . ' data-bs-toggle="tooltip" title="Owned: ' . $_SESSION["user"]["extraLife"] . '"><img src="images/extraLife.gif" style="width:30px;height:30px"> </button>';
+echo '<button class ="submit w-10 h-10" role = "button" type="submit" name="powerup" value="removeOptions"' . $noRemoveOptions . ' data-bs-toggle="tooltip" title="Owned: ' . $_SESSION["user"]["removeOptions"] . '"><img src="images/removeOptions.png" style="width:30px;height:30px"> </button>';
+echo '</form>';
+echo '</div>';
+
+
+// Main
 echo "<div class='container-fluid mt-3 '>";
 
   echo "<div class='mt-5'>";
-  echo "<h2 class='text-center' style='color:white;'>" . $_SESSION["word"][$randomWord] . "</h2>";
+  echo "<h2 class='text-center' style='color:white;'>" . $_SESSION["word"][$_SESSION["randomWord"]] . "</h2>";
   echo "</div>";
-  echo "<h5 class='text-center' > - " . $_SESSION["meaning"][$randomWord] . "</h5>";
-  echo "<h6 class='text-center' >\"" . $_SESSION["example"][$randomWord] . "\"</h6>";
+  echo "<h5 class='text-center' > - " . $_SESSION["meaning"][$_SESSION["randomWord"]] . "</h5>";
+  echo "<h6 class='text-center' >\"" . $_SESSION["example"][$_SESSION["randomWord"]] . "\"</h6>";
   echo "<hr class='rounded mt-5'>";
 
   echo "<div class='mt-5'>";
@@ -594,12 +689,12 @@ echo "<div class='container-fluid mt-3 '>";
   echo "<div class='row'>";
     echo "<div class='col-md mt-1'>";
     echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c1' id='choice1' autocomplete='off'>";
-    echo "<label class='button-19' role='button' id = 'label1' for='choice1'>" . $_SESSION["c1"][$randomWord] . "</label>";
+    echo "<label class='button-19' role='button' id = 'c1' for='choice1'>" . $_SESSION["c1"][$_SESSION["randomWord"]] . "</label>";
     echo "</div>";
 
     echo "<div class='col-md mt-1'>";
     echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c2' id='choice2' autocomplete='off'>";
-    echo "<label class='button-19' role='button' id = 'label2' for='choice2'>" . $_SESSION["c2"][$randomWord] . "</label>";
+    echo "<label class='button-19' role='button' id = 'c2' for='choice2'>" . $_SESSION["c2"][$_SESSION["randomWord"]] . "</label>";
     echo "</div>";
 
     echo "</div>";
@@ -608,30 +703,31 @@ echo "<div class='container-fluid mt-3 '>";
 
     echo "<div class='col-md mt-1'>";
     echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c3' id='choice3' autocomplete='off'>";
-    echo "<label class='button-19' role='button' id = 'label3' for='choice3'>" . $_SESSION["c3"][$randomWord] . "</label>";
+    echo "<label class='button-19' role='button' id = 'c3' for='choice3'>" . $_SESSION["c3"][$_SESSION["randomWord"]] . "</label>";
     echo "</div>";
     
     echo "<div class='col-md mt-1'>";
     echo "<input type='radio' onclick='enableSubmit()' class='btn-check' name='choice' value='c4' id='choice4' autocomplete='off'>";
-    echo "<label class='button-19' role='button' id = 'label4' for='choice4'>" . $_SESSION["c4"][$randomWord] . "</label>";
+    echo "<label class='button-19' role='button' id = 'c4' for='choice4'>" . $_SESSION["c4"][$_SESSION["randomWord"]] . "</label>";
     echo "</div>";
 
     echo "</div>";
     
 
 
-    echo "<input type='hidden' name='randomWord' value='" . $randomWord . "'>";
+    echo "<input type='hidden' name='randomWord' value='" . $_SESSION["randomWord"] . "'>";
+
 
 
   echo "<div class='text-center mt-3 mb-3'>";
+  echo "<br>";
   echo "<input type='submit' value='Check' id='submit' class='submit' role='button' disabled>";
   echo "</div>";
   echo "</div>";
-
-
   echo "</form>";
 
-  
+
+
 echo "</div>";
 
 }
@@ -673,11 +769,61 @@ else  if ($wrong)
   echo '</script>';
 }
 
+if ($removeOptions)
+{
+  if (!($_SESSION["ropOn"]))
+  {
+    $choices = ["c1", "c2", "c3", "c4"];
+    $_SESSION["randOp"] = [$_SESSION["correct"][$_SESSION["randomWord"]], $_SESSION["correct"][$_SESSION["randomWord"]]];
+    while ($_SESSION["randOp"][0] == $_SESSION["correct"][$_SESSION["randomWord"]])
+    {
+      $i = rand(0, count($choices) - 1);
+      $_SESSION["randOp"][0] = $choices[$i];
+      unset($choices[$i]);
+      $choices = array_values($choices);
+    }
+
+    echo '<script>';
+    echo 'document.getElementById("' . $_SESSION["randOp"][0] . '").style.visibility= "hidden";';
+    echo '</script>';
+        $_SESSION["ropOn"] = True;
+    while ($_SESSION["randOp"][1] == $_SESSION["correct"][$_SESSION["randomWord"]])
+    {
+      $i = rand(0, count($choices) - 1);
+      $_SESSION["randOp"][1] = $choices[$i];
+    }
+
+    echo '<script>';
+    echo 'document.getElementById("' . $_SESSION["randOp"][1] . '").style.visibility= "hidden";';
+    echo '</script>';
+    $_SESSION["ropOn"] = True;
+  }
+  else
+  {
+    echo '<script>';
+    echo 'document.getElementById("' . $_SESSION["randOp"][0] . '").style.visibility= "hidden";';
+    echo 'document.getElementById("' . $_SESSION["randOp"][1] . '").style.visibility= "hidden";';
+    echo '</script>';
+
+  }
+  
+}
+
 ?>
 </body>
 
 <script type="text/javascript">
 
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl)
+})
+
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 
 
 
@@ -689,7 +835,7 @@ function enableSubmit()
 // Audio 
 document.getElementById("choice1")
 .addEventListener("click", ()=>{
-  var msg = document.getElementById("label1").textContent;
+  var msg = document.getElementById("c1").textContent;
   const utterance = new SpeechSynthesisUtterance(msg);
   speechSynthesis.speak(utterance);
 ;
@@ -697,21 +843,21 @@ document.getElementById("choice1")
 
 document.getElementById("choice2")
 .addEventListener("click", ()=>{
-  var msg = document.getElementById("label2").textContent;
+  var msg = document.getElementById("c2").textContent;
   const utterance = new SpeechSynthesisUtterance(msg);
   speechSynthesis.speak(utterance);
 })
 
 document.getElementById("choice3")
 .addEventListener("click", ()=>{
-  var msg = document.getElementById("label3").textContent;
+  var msg = document.getElementById("c3").textContent;
   const utterance = new SpeechSynthesisUtterance(msg);
   speechSynthesis.speak(utterance);
 })
 
 document.getElementById("choice4")
 .addEventListener("click", ()=>{
-  var msg = document.getElementById("label4").textContent;
+  var msg = document.getElementById("c4").textContent;
   const utterance = new SpeechSynthesisUtterance(msg);
   speechSynthesis.speak(utterance);
 })

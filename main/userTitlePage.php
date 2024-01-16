@@ -12,9 +12,9 @@
 <center>
     <img  src="images/Logo1.png" alt="SpeakWiz Logo" style="height:500px"; width:500px; class="LOGO">
 	
-    <a href="Log_In.php" class="submit">LOG IN</a>
+    <a href="userLoginTemp.php" class="submit">LOG IN</a>
     &nbsp;
-    <a href="Sign_Up.php" class="submit">SIGN UP</a>
+    <a href="userSignUp.php" class="submit">SIGN UP</a>
 </center>
 </body>
 </html>

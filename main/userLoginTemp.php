@@ -40,7 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     'totalCorrect' => $row['totalCorrect'],
                     'x2' => $row['x2'],
                     'extraLife' => $row['extraLife'],
-                    'removeOptions' => $row['removeOptions']
+                    'removeOptions' => $row['removeOptions'],
+                    'avatar' => $row['avatar']
                 ];
                 
                 header("Location: userHomePage.php");
