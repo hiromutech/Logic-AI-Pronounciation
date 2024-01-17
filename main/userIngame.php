@@ -317,7 +317,9 @@ else if ($_SERVER["REQUEST_METHOD"] == "POST")
       {
         $_SESSION["user"]["highscore"] = $_SESSION["score"];
 
-        $sql = 'UPDATE users SET highscore = "' . $_SESSION["user"]["highscore"]. '" WHERE user_id = ' 
+        
+
+        $sql = 'UPDATE users SET highscore = ' . $_SESSION["user"]["highscore"]. ' WHERE user_id = ' 
         . $_SESSION["user"]["user_id"];
         $result = mysqli_query($conn, $sql);
 
@@ -330,8 +332,8 @@ else if ($_SERVER["REQUEST_METHOD"] == "POST")
       $_SESSION["user"]["totalAnswered"] += $_SESSION["questions"];
       $_SESSION["user"]["totalCorrect"] += $_SESSION["score"];
 
-      $sql = 'UPDATE users SET potions = ' . $_SESSION["user"]["potions"] . ',
-      highscore = ' . $_SESSION["user"]["potions"] . ', totalPotions = ' . $_SESSION["user"]["totalPotions"] . '
+      $sql = 'UPDATE users SET potions = ' . $_SESSION["user"]["potions"] . 
+      ', totalPotions = ' . $_SESSION["user"]["totalPotions"] . '
       , totalCorrect = ' . $_SESSION["user"]["totalCorrect"] . ' , totalAnswered = ' . $_SESSION["user"]["totalAnswered"] . '
       WHERE user_id = ' . $_SESSION["user"]["user_id"];
       $result = mysqli_query($conn, $sql);

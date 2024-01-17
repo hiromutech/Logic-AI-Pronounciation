@@ -296,21 +296,6 @@
     <input type="submit" name = "submit"  class="submit">
     <p style="color: white;font-size: 12px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">OR</p>
 
-    <script src="https://accounts.google.com/gsi/client" async></script>
-    <div id="g_id_onload"
-        data-client_id="YOUR_GOOGLE_CLIENT_ID"
-        data-login_uri="https://your.domain/your_login_endpoint"
-        data-auto_prompt="false">
-    </div>
-    <div class="g_id_signin"
-        data-type="standard"
-        data-size="large"
-        data-theme="outline"
-        data-text="sign_in_with"
-        data-shape="rectangular"
-        data-logo_alignment="left">
-    </div>
-
     </form>
 
     <p>&nbsp;</p>    
@@ -320,9 +305,9 @@
     </div>
     
     &nbsp;
-    <a href="Log_In.php" class="submit">LOG IN</a>
+    <a href="userLogin.php" class="submit">LOG IN</a>
     &nbsp;
-    <a href="Title_Page.php" class="submit">BACK</a>
+    <a href="userTitlePage.php" class="submit">BACK</a>
 
     <p>&nbsp;</p>
 	

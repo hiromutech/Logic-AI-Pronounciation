@@ -25,10 +25,6 @@ if (isset($_POST["play"]))
 {
   $page = "play";
 }
-else if (isset($_POST["quests"]))
-{
-  $page = "quests";
-}
 else if (isset($_POST["shop"]))
 {
   $page = "shop";
@@ -215,8 +211,10 @@ if (isset($_POST["buyX2"]))
   $page = "shop";
 
   $_SESSION["user"]["x2"]++;
+  $_SESSION["user"]["potions"] -= 10;
 
-  $sql = 'UPDATE users SET x2 = ' . $_SESSION["user"]["x2"] . ' WHERE user_id = ' 
+  $sql = 'UPDATE users SET x2 = ' . $_SESSION["user"]["x2"] . ', potions = ' 
+  . $_SESSION["user"]["potions"] - 10 . ' WHERE user_id = ' 
   . $_SESSION["user"]["user_id"];
   $result = mysqli_query($conn, $sql);
 }
@@ -226,8 +224,10 @@ if (isset($_POST["buyExtraLife"]))
   $page = "shop";
 
   $_SESSION["user"]["extraLife"]++;
+  $_SESSION["user"]["potions"] -= 10;
 
-  $sql = 'UPDATE users SET extraLife = ' . $_SESSION["user"]["extraLife"] . ' WHERE user_id = ' 
+  $sql = 'UPDATE users SET extraLife = ' . $_SESSION["user"]["extraLife"] . ', potions = ' 
+  . $_SESSION["user"]["potions"] - 10 . ' WHERE user_id = ' 
   . $_SESSION["user"]["user_id"];
   $result = mysqli_query($conn, $sql);
 }
@@ -237,8 +237,10 @@ if (isset($_POST["buyRemoveOptions"]))
   $page = "shop";
 
   $_SESSION["user"]["removeOptions"]++;
+  $_SESSION["user"]["potions"] -= 5;
 
-  $sql = 'UPDATE users SET x2 = ' . $_SESSION["user"]["removeOptions"] . ' WHERE user_id = ' 
+  $sql = 'UPDATE users SET x2 = ' . $_SESSION["user"]["removeOptions"] . ', potions = ' 
+  . $_SESSION["user"]["potions"] - 5 . ' WHERE user_id = ' 
   . $_SESSION["user"]["user_id"];
   $result = mysqli_query($conn, $sql);
 }
@@ -383,6 +385,12 @@ color: white}
   transform: translateY(5px);
 }
 
+.submit:disabled {
+  background-color: transparent;
+  border: 1px solid #8000ff;
+  box-shadow: 0 5px 0 #5900b3; 
+}
+
 h5
 {
   color:white; 
@@ -417,6 +425,16 @@ hr.rounded {
   background-color: transparent;
 }
 
+.card-header, .card-title
+{
+  font-family: Quicksand;
+
+}
+
+.card-text
+{
+  font-family: Roboto;
+}
 
 </style>
 
@@ -507,12 +525,6 @@ hr.rounded {
                           <input type="submit" name = "play" value="PLAY" class="sidebar ms-1 mb-3 d-none d-sm-inline">
                         </form>
                     </li>
-
-                    <li>
-                        <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method ="post">
-                          <input type="submit" name = "quests" value="QUESTS" class="sidebar ms-1 mb-3 d-none d-sm-inline">
-                        </form>
-                    </li>
                     <li>
                         <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method ="post">
                           <input type="submit" name = "shop" value="SHOP" class="sidebar ms-1 mb-3 d-none d-sm-inline">
@@ -559,58 +571,6 @@ hr.rounded {
                 <input name="start" type="submit" value="Start"  class="submit">
                 </form>
                 </div>
-            </div>
-            <div class="col py-3">
-
-            <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">' . $_SESSION["user"]["potions"] . '</h3>
-
-                <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <h5 class="card-title">Light card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
-                </div>
-                </div>
-        
-            </div>';
-        }
-        else if ($page == "quests")
-        {
-          echo '<div class="col py-3">
-                <div class="container text-center mt-3">
-                  <h2 class="h2 text-light">QUESTS</h2>
-                  <div class="card border-secondary">
-      
-                    <div class="card-body" style="background-color:#111F23; color: white">
-                      <h5 class="card-title">Summoning</h5>
-                      <p class="card-text">Score a total of 100 points</p>
-                      <div class="progress">
-                        <div class="progress-bar" style="width:0%; background-color: #8000ff"></div>
-                      </div>
-                      <p class="mt-3"> <img src="images/potion.png" style="height;30px;width:30px;"> 10 </p>
-     
-  
-                      <form  action = "' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="POST">
-                        <input name="summoning" type="submit" value="Start"  class="btn btn-primary" style="background-color: #8000ff" disabled>
-                      </form>
-                    
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <div class="col py-3">
-
-            <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">' . $_SESSION["user"]["potions"] . '</h3>
-
-                <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <h5 class="card-title">Light card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
-                    
-                </div>
-                </div>
-        
             </div>';
         }
         else if ($page == "shop")
@@ -631,7 +591,16 @@ hr.rounded {
                         <p class="card-text"><small>Owned: ' . $_SESSION["user"]["x2"] . '</small></p>
                         <p class="card-text"><img src="images/potion.png" style="height:20px; width:20px"> 10</p>
                         <form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="POST">
-                        <input type="submit" class="submit" name="buyX2" value="Buy">
+                        <input type="submit" class="submit" name="buyX2" value="Buy"';
+                        
+                        if (!($_SESSION["user"]["potions"] >= 10))
+                        {
+                          echo 'disabled data-bs-toggle="tooltip" title="Not enough Potions"';
+                        }
+          
+               
+                      
+                        echo '>
                         </form>
                       </div>
                       </div>
@@ -650,7 +619,15 @@ hr.rounded {
                         <p class="card-text"><small>Owned: ' . $_SESSION["user"]["extraLife"] . '</small></p>
                         <p class="card-text"><img src="images/potion.png" style="height:20px; width:20px"> 10</p>
                         <form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="POST">
-                        <input type="submit" class="submit" name="buyExtraLife" value="Buy">
+                        <input type="submit" class="submit"  name="buyExtraLife" value="Buy"'; 
+                        if (!($_SESSION["user"]["potions"] >= 10))
+                        {
+                          echo 'disabled data-bs-toggle="tooltip" title="Not enough Potions"';
+                        }
+          
+               
+                      
+                        echo '>
                         </form>
                       </div>
                       </div>
@@ -665,11 +642,16 @@ hr.rounded {
                       <div class="col-md-8">
                       <div class="card-body" style="background-color:#111F23; color: white">
                         <h5 class="card-title">Eliminate Option</h5>
-                        <p class="card-text">Eliminate a wrong option</p>
+                        <p class="card-text">Eliminate two (2) wrong options</p>
                         <p class="card-text"><small>Owned: ' . $_SESSION["user"]["removeOptions"] . '</small></p>
                         <p class="card-text"><img src="images/potion.png" style="height:20px; width:20px"> 5</p>
                         <form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="POST">
-                        <input type="submit" class="submit" name="buyRemoveOptions" value="Buy">
+                        <input type="submit" class="submit" name="buyRemoveOptions" value="Buy"';
+                        if (!($_SESSION["user"]["potions"] >= 5))
+                        {
+                          echo 'disabled data-bs-toggle="tooltip" title="Not enough Potions"';
+                        }                                    
+                        echo '>
                         </form>
                         </div>
                       </div>
@@ -677,20 +659,6 @@ hr.rounded {
                   </div>
 
               </div>
-            </div>
-            <div class="col py-3">
-            <div class="sticky-top">
-            <h3 class="text-center pt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">' . $_SESSION["user"]["potions"] . '</h3>
-
-                <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <h5 class="card-title">Light card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
-                </div>
-                </div>
-              </div>
-        
             </div>';
         }
         else if ($page == "settings")
@@ -734,22 +702,8 @@ hr.rounded {
                 <br>
 
                 </div>
-            </div>
-
-            <div class="col py-3">
-            <div class="sticky-top">
-            <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">' . $_SESSION["user"]["potions"] . '</h3>
-
-                <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <h5 class="card-title">Light card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
-                </div>
-                </div>
-            </div>
-        
             </div>';
+
         }
         else if ($page == "profile")
         {
@@ -785,26 +739,41 @@ hr.rounded {
                 </tbody>
               </table>
               </div>
-            </div>
-            <div class="col py-3">
-
-                <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;">' . $_SESSION["user"]["potions"] . '</h3>
-
-                <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <h5 class="card-title">Light card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
-                </div>
-                </div>
-        
             </div>';
         }
         ?>
-    </div>
-</div>
+        <div class="col py-3">
+        <div class="sticky-top">
 
+          <h3 class="text-center mt-3 mb-4" style="color:white"> <img src="images/potion.png"  style="height;50px;width:50px;"> <?php echo $_SESSION["user"]["potions"]; ?></h3>
 
+          <div class="card border-secondary mb-3" style="background-color:#111F23; color: white">
+          <div class="card-header">Beginner Manual</div>
+          <div class="card-body">
+            <h5 class="card-title">Introduction</h5>
+            <p class="card-text">-They have three (3) hearts. Every wrong answer will deduct one (1) heart. If their heart becomes zero, then it is GAME OVER.</p>
+            <p class="card-text">-Every 5 star they will get is equivalent to one (1) potion. The potion is their credits to buy power-ups. </p>
+            <h5 class="card-title">Instructions</h5>
+            <p class="card-text">-Choose the correct answer in the multiple choices of words.</p>
+            <p class="card-text">-In every choices they click, the game will say the pronunciation of the word you clicked. The "CHECK" button will tell them if the answer is correct or wrong. If the answer is correct, it will proceed to the next round. If the answer is wrong, one (1) heart will be deducted.</p>
+            <p class="card-text">-The sets of rounds are continuous until they get the game over.</p>
+            <p class="card-text">-If the game is over, they can choose between trying again or returning to main menu.</p>
+
+          </div>
+          </div>
+          </div>
+
+      </div>
+  </div>
+
+<script>
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
+</script>
 
 
 

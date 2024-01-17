@@ -1,0 +1,351 @@
+@font-face 
+{
+  font-family: Quicksand;
+  src: url(Quicksand_Bold.otf);
+}
+
+@font-face{
+  font-family: Roboto;
+  src: url(Roboto-Light.ttf);
+}
+
+
+.error {color: #FF0000;}
+
+body {background-image:url(https://e0.pxfuel.com/wallpapers/378/851/desktop-wallpaper-stars-purple-cosmos-space-cosmos-universe.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    font-family: "Quicksand";
+    color:white;
+    }
+
+
+
+
+.LOGO {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn_log {
+    display: block;
+    margin-left: auto ;
+    margin-right: auto;
+    width: 15%;
+    text-align: center;
+    padding : 8px 20px;
+    border-radius: 25px;
+    margin: 0 10px    
+}
+
+.btn_sign {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15%;
+    text-align: center;
+    padding : 8px 20px;
+    border-radius: 25px;
+    margin: 0 10px
+}
+
+.btn_back {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15%;
+    text-align: center;
+    padding : 8px 20px;
+    border-radius: 25px;
+    margin: 0 10px
+}
+
+.btn_log {
+    background-color: violet;
+}
+
+.btn_sign {
+    background-color: indigo;
+}
+
+.btn_back {
+    background-color: purple;
+}
+
+.name {
+    background: white;
+    width: 90%;
+    max-width: 265px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: auto;
+    display: flex;
+}
+
+.name input {
+    width: 100%;
+    padding: 10px 0;
+    border: 0;
+    outline: 0;
+    color: #555
+}
+
+.username {
+    background: white;
+    width: 90%;
+    max-width: 265px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: auto;
+    display: flex;
+}
+
+.username input {
+    width: 100%;
+    padding: 10px 0;
+    border: 0;
+    outline: 0;
+    color: #555
+}
+
+.email {
+    background: white;
+    width: 90%;
+    max-width: 265px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: auto;
+    display: flex;
+}
+
+.email input {
+    width: 100%;
+    padding: 10px 0;
+    border: 0;
+    outline: 0;
+    color: #555
+}
+
+.contact {
+    background: white;
+    width: 90%;
+    max-width: 265px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: auto;
+    display: flex;
+}
+
+.contact input {
+    width: 100%;
+    padding: 10px 0;
+    border: 0;
+    outline: 0;
+    color: #555
+}
+
+.pass{
+    background: white;
+    width: 90%;
+    max-width: 265px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.pass input {
+    width: 100%;
+    padding: 10px 0;
+    border: 0;
+    outline: 0;
+    color: #555
+}
+
+.pass img {
+    cursor: pointer;
+    width: 25px; 
+    height: 25px;
+}
+
+
+.pass1{
+    background: white;
+    width: 90%;
+    max-width: 265px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.pass1 input {
+    width: 100%;
+    padding: 10px 0;
+    border: 0;
+    outline: 0;
+    color: #555
+}
+
+.pass1 img {
+    cursor: pointer;
+    width: 25px; 
+    height: 25px;
+}
+
+
+.Noaccount{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    align-items: center;
+    column-gap: 3rem;
+    margin: 1% 25%;
+}
+
+.Noaccount::before, .Noaccount::after{
+    content: "";
+    height: 2px;
+    background-color: white;
+    display: flex;
+}
+
+.g_id_signin {
+    width: 300px;
+}
+
+h1{color: white;}
+h5{color: white;}
+
+#confirmation {
+accent-color: #9b59b6;
+}
+
+label {
+color:palevioletred;
+}
+
+
+    
+    
+    
+    
+    
+    /* CSS */
+    .button-19 {
+      appearance: button;
+      background-color: #5900b3;
+      border: solid transparent;
+      border-radius: 16px;
+      border-width: 0 0 4px;
+      box-sizing: border-box;
+      color: #FFFFFF;
+      cursor: pointer;
+      display: inline-block;
+      font-family: 'Quicksand';
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      line-height: 20px;
+      margin: 0;
+      outline: none;
+      overflow: visible;
+      padding: 13px 16px;
+      text-align: center;
+      text-transform: uppercase;
+      touch-action: manipulation;
+      transform: translateZ(0);
+      transition: filter .2s;
+      user-select: none;
+      -webkit-user-select: none;
+      vertical-align: middle;
+      white-space: nowrap;
+      width: 100%;
+    }
+    
+    .button-19:after {
+      background-clip: padding-box;
+      background-color: #8000ff;
+      border: solid transparent;
+      border-radius: 16px;
+      border-width: 0 0 4px;
+      bottom: -4px;
+      content: "";
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: -1;
+    }
+    
+    .button-19:main,
+    .button-19:focus {
+      user-select: auto;
+    }
+    
+    .button-19:hover:not(:disabled) {
+      filter: brightness(1.1);
+      -webkit-filter: brightness(1.1);
+    }
+    
+    .button-19:disabled {
+      cursor: auto;
+    }
+    
+    .button-19:active {
+      border-width: 4px 0 0;
+      background: none;
+    }
+    
+    
+    /* Boilerplate */
+    .submit {
+      all: unset;
+      display: inline-block;
+      padding: 20px;
+      color: white;
+      text-transform: uppercase;
+      font-family: 'Quicksand';
+      letter-spacing: 1.5px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 17px;
+    }
+    
+    /* Important stuff below */
+    .submit {
+      background-color: #8000ff;
+      box-shadow: 0 5px 0 #5900b3; 
+    }
+    
+    .submit:active {
+      box-shadow: none;
+      transform: translateY(5px);
+    }
+
+    .submit:hover{
+        color: palevioletred; background-color: pink;
+    }
+    
+
+    h5
+    {
+      color:white; 
+      font-family:'Roboto';
+    }
+    
+    h6
+    {
+      color:#f2f2f2; 
+      font-family:'Roboto'; 
+      font-style:italic;
+    }
+    
+    hr.rounded {
+      border-top: 8px solid white;
+      border-radius: 5px;
+    }
+    

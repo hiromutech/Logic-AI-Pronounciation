@@ -18,7 +18,7 @@ if(isset($_POST['password-reset-token']) && $_POST['email']){
      $expFormat = mktime(date("H"), date("i"), date("s"), date("m") ,date("d")+1, date("Y"));
     $base_url =  (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]";
     // reset link
-     $actual_link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/project/views/";
+     $actual_link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/Logic-AI-Pronounciation/main/";
 
     $expDate = date("Y-m-d H:i:s",$expFormat);
 
@@ -26,9 +26,9 @@ if(isset($_POST['password-reset-token']) && $_POST['email']){
 
     $link = "<a href='" . $actual_link ."resetpassword.php?key=".$emailId."&token=".$token."'>Click To Reset password</a>";
 
-    include_once($_SERVER['DOCUMENT_ROOT'] . '/project/vendor/phpmailer/phpmailer/src/PHPMailer.php');
-    include_once($_SERVER['DOCUMENT_ROOT'] . '/project/vendor/phpmailer/phpmailer/src/SMTP.php');
-    include_once($_SERVER['DOCUMENT_ROOT'] . '/project/vendor/phpmailer/phpmailer/src/Exception.php');
+    include_once($_SERVER['DOCUMENT_ROOT'] . '/Logic-AI-Pronounciation/main/vendor/phpmailer/phpmailer/src/PHPMailer.php');
+    include_once($_SERVER['DOCUMENT_ROOT'] . '/Logic-AI-Pronounciation/main/vendor/phpmailer/phpmailer/src/SMTP.php');
+    include_once($_SERVER['DOCUMENT_ROOT'] . '/Logic-AI-Pronounciation/main/vendor/phpmailer/phpmailer/src/Exception.php');
 
     
     $mail = new PHPMailer\PHPMailer\PHPMailer();
@@ -62,31 +62,15 @@ if(isset($_POST['password-reset-token']) && $_POST['email']){
       <head>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <link rel='stylesheet' type='text/css' href=Sign_Up.css>
         <title>Reset Password</title>
-        <style>
-        .alert {
-            position: relative;
-            padding: .75rem 1.25rem;
-            margin-bottom: 1rem;
-            border: 1px solid transparent;
-            border-radius: .25rem;
-        }
-        
-        .alert-danger {
-            color: #721c24;
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-        }
-
-        .alert-success {
-            color: #155724;
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
-        </style>
       </head>
       <body>
-        <div class='alert alert-success text-center'>Success! Check your Email and Click on the link sent to your email. <a href=$base_url/project/views/login.php>Back to login</a></div>
+      <center>
+      <img  src='Logo1.png' alt='SpeakWiz Logo' style='height:500px'; width:500px; class='LOGO'>
+      <h1>Success! Check your Email and Click on the link sent to your email.</h1>
+      <a href=$base_url/Logic-AI-Pronounciation/main/userLogin.php class='submit'>Go Back to login</a>
+      <center>
       </body>
     </html>";
       // redirect to reset password view
@@ -96,7 +80,25 @@ if(isset($_POST['password-reset-token']) && $_POST['email']){
       echo "Mail Error -> ".$mail->ErrorInfo;
     }
   }else{
-    echo "Invalid Email Address. Go back";
+    echo "<!DOCTYPE html>
+      <html lang='en'>
+      <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <link rel='stylesheet' type='text/css' href=Sign_Up.css>
+        <title>Reset Password</title>
+        
+      </head>
+      <body>
+      <center>
+      <img  src='Logo1.png' alt='SpeakWiz Logo' style='height:500px'; width:500px; class='LOGO'>
+      <h1>Invalid Email</h1>
+      <a href=/Logic-AI-Pronounciation/main/forgotpassword.php class='submit'>Go Back</a>
+      <center>
+      </body>
+    </html>";
   }
 }
+else
+
 ?>
